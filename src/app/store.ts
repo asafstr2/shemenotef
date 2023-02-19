@@ -2,6 +2,7 @@ import { configureStore } from "@reduxjs/toolkit";
 import { setupListeners } from "@reduxjs/toolkit/query";
 import { productsApi, productsApiAdmin } from "app/services/productsApi";
 import { authApi } from "app/services/authService";
+import { payApi } from "app/services/paymant";
 import { rtkQueryErrorOrSuccessLogger } from "app/services/errorOrSuccessMiddleware";
 import cartReducer, { getTotals } from "app/slices/cartSlice";
 import checkoutSlice, { nextPage } from "app/slices/checkoutSlice";
@@ -13,6 +14,7 @@ export const store = configureStore({
     [productsApi.reducerPath]: productsApi.reducer,
     [productsApiAdmin.reducerPath]: productsApiAdmin.reducer,
     [authApi.reducerPath]: authApi.reducer,
+    [payApi.reducerPath]: payApi.reducer,
     cart: cartReducer,
     checkout: checkoutSlice,
     user: userSlice,
@@ -23,7 +25,8 @@ export const store = configureStore({
       rtkQueryErrorOrSuccessLogger,
       productsApi.middleware,
       productsApiAdmin.middleware,
-      authApi.middleware
+      authApi.middleware,
+      payApi.middleware
     ),
 });
 

@@ -14,6 +14,8 @@ import PaymentForm from "./PaymentForm";
 import Review from "./Review";
 import { translate } from "util/translate";
 import { Data } from "./types";
+import { usePayMutation } from "app/services/paymant";
+
 function Copyright() {
   return (
     <Typography variant="body2" color="text.secondary" align="center">
@@ -35,9 +37,9 @@ function getStepContent(
   switch (step) {
     case 0:
       return <AddressForm step={step} setData={setData} data={data} />;
+    // case 1:
+    //   return <PaymentForm step={step} setData={setData} data={data} />;
     case 1:
-      return <PaymentForm step={step} setData={setData} data={data} />;
-    case 2:
       return <Review data={data} />;
     default:
       throw new Error(translate("unknownStep"));
@@ -45,16 +47,50 @@ function getStepContent(
 }
 
 export default function Checkout() {
+  const [pay, { isLoading }] = usePayMutation();
+
   const steps = [
     translate("ShippingAddress"),
-    translate("PaymentDetails"),
+    // translate("PaymentDetails"),
     translate("ReviewYourOrder"),
   ];
   const [activeStep, setActiveStep] = useState(0);
-  const [data, setData] = useState({ shipping: {}, payment: {} });
+  const [data, setData] = useState<Data>({
+    shipping: {},
+    payment: {},
+  });
+  console.log({ data });
 
-  const handleNext = () => {
-    setActiveStep(activeStep + 1);
+  const dummy = {
+    UserId: "300753316",
+    ClientName: "asaf",
+    ClientLName: "strilitz",
+    street: "hashked 24",
+    city: "shderot",
+    zip: "12345",
+    phone: "0549012568",
+    cell: "0549012568",
+    email: "asafstr2@gmail.com",
+  };
+  const handleNext = async () => {
+    console.log({ activeStep });
+    if (activeStep === steps.length - 1) {
+      const { shipping } = data;
+      const dataToSend = {
+        ClientName: shipping.firstName,
+        ClientLName: shipping.lastName,
+        street: shipping.address2,
+        city: shipping.city,
+        zip: shipping.zip,
+        phone: shipping.phone,
+        cell: shipping.phone,
+        email: shipping.email,
+      };
+      const url = (await pay(dataToSend).unwrap()) as { paytmantUrl: string };
+
+      console.log({ url });
+      return (window.location.href = url.paytmantUrl);
+    } else setActiveStep(activeStep + 1);
   };
 
   const handleBack = () => {

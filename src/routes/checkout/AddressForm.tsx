@@ -57,11 +57,12 @@ export default function AddressForm({ step, setData, data }: Props) {
         </Grid>
         <Grid item xs={12}>
           <TextField
-            value={data.shipping.address1}
+            value={data.shipping.phone}
             required
-            id="address1"
-            name="address1"
-            label={translate("address1")}
+            id="phone"
+            type="phone"
+            name="phone"
+            label={translate("phone")}
             fullWidth
             autoComplete="shipping address-line1"
             variant="standard"
@@ -95,10 +96,11 @@ export default function AddressForm({ step, setData, data }: Props) {
         </Grid>
         <Grid item xs={12} sm={6}>
           <TextField
-            value={data.shipping.state}
-            id="state"
-            name="state"
-            label={translate("state")}
+            value={data.shipping.email}
+            id="email"
+            name="email"
+            type="email"
+            label={translate("email")}
             fullWidth
             variant="standard"
             onChange={handleChange}

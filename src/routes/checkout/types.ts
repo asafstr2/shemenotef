@@ -8,6 +8,8 @@ export type Data = {
     state?: string;
     zip?: string;
     country?: string;
+    phone?: string;
+    email?: string;
   };
   payment: {
     cardName?: string;

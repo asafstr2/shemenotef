@@ -63,7 +63,33 @@ export const baseQueryWithUserForProduct = retry(
     maxRetries: 5,
   }
 );
+export const baseQueryWitParamsAndhUser = retry(
+  async (args: any, api: any, extraOptions: any): Promise<any> => {
+    const userId = extractCurrentUserId(api.getState());
+    const result = await fetchBaseQuery({
+      baseUrl: `${BASEURL}/paymant/${userId}`,
+      prepareHeaders: (headers) => {
+        const token = extractToken();
+        // If we have a token set in state, let's assume that we should be passing it.
+        if (token) {
+          headers.set("authorization", `Bearer ${token}`);
+        }
+        return headers;
+      },
+    })(args, api, extraOptions);
 
+    // bail out of re-tries immediately if unauthorized,
+    // because we know successive re-retries would be redundant
+    if (result.error?.status === 401) {
+      retry.fail(result.error);
+    }
+
+    return result;
+  },
+  {
+    maxRetries: 5,
+  }
+);
 export const baseQuery = retry(
   async (args: any, api: any, extraOptions: any): Promise<any> => {
     const result = await fetchBaseQuery({

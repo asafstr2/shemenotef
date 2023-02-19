@@ -106,3 +106,15 @@ export interface Cart {
   cartTotalQuantity: number;
   cartTotalAmount: number;
 }
+
+export interface PaymantData {
+  UserId: string;
+  ClientName: string;
+  ClientLName: string;
+  street: string;
+  city: string;
+  zip: string;
+  phone: string;
+  cell: string;
+  email: string;
+}
