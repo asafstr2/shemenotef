@@ -8,12 +8,8 @@ function Profile() {
 
   return (
     <div>
-      <p>user name pic and stats </p>
-      <p>
-        outelet of profile to include last purchases cart info matched products{" "}
-      </p>
-      a<button onClick={() => dispatch(logout({}))}>log out</button>
       <Outlet />
+      <button onClick={() => dispatch(logout({}))}>log out</button>
     </div>
   );
 }

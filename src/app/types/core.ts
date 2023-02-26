@@ -105,6 +105,7 @@ export interface Cart {
   cartItems: Products[];
   cartTotalQuantity: number;
   cartTotalAmount: number;
+  couponCodes: string[];
 }
 
 export interface PaymantData {

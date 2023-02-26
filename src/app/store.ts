@@ -4,7 +4,7 @@ import { productsApi, productsApiAdmin } from "app/services/productsApi";
 import { authApi } from "app/services/authService";
 import { payApi } from "app/services/paymant";
 import { rtkQueryErrorOrSuccessLogger } from "app/services/errorOrSuccessMiddleware";
-import cartReducer, { getTotals } from "app/slices/cartSlice";
+import cartReducer from "app/slices/cartSlice";
 import checkoutSlice, { nextPage } from "app/slices/checkoutSlice";
 import userSlice from "app/slices/userSlice";
 import language from "app/slices/langSlice";

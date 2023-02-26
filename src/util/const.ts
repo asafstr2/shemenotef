@@ -1,5 +1,9 @@
 export const CURRENCY = "₪";
 export const shipping = 10;
+export const coupons = {
+  "no-shipping": { value: shipping, operator: "-" },
+  "10%off": { value: 0.9, operator: "*" },
+};
 export const BASEURLFAKE = "https://fakestoreapi.com/";
 export const BASEURL = "http://localhost:8085/api";
 export const testJWT =
@@ -138,6 +142,7 @@ const cartLanguage = {
     proceedToCheckOut: " המשך לתשלום",
     "Add to cart": "הוסף לעגלה",
     "date not specified": "לא הוגדר תאריך",
+    cuppons: "קופונים",
   },
   [language.english]: {
     Order: "Order",
@@ -148,6 +153,7 @@ const cartLanguage = {
     proceedToCheckOut: "PROCEED TO CHECKOUT",
     "Add to cart": "Add to cart",
     "date not specified": "date not specified",
+    cuppons: "cuppons",
   },
 };
 

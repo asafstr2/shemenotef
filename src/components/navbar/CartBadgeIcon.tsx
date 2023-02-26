@@ -8,14 +8,12 @@ import NavLink from "components/utils/Link";
 import { RootState } from "app/store";
 export default function CartBadgeIcon() {
   const dispatch = useDispatch();
-  const cart = useSelector((state: RootState) => state.cart);
-  useEffect(() => {
-    dispatch(getTotals({}));
-  }, [cart, dispatch]);
+  const { cartTotalQuantity } = useSelector(getTotals);
+
   return (
     <NavLink to="/cart">
       <IconButton size="large" aria-label="cart" color="inherit">
-        <Badge badgeContent={cart.cartTotalQuantity} color="error">
+        <Badge badgeContent={cartTotalQuantity} color="error">
           <ShoppingCartIcon fontSize={"large"} />
         </Badge>
       </IconButton>

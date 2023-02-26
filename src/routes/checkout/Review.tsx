@@ -10,11 +10,14 @@ import { truncateString } from "util/functions";
 import { translate } from "util/translate";
 import { Data } from "./types";
 import { RootState } from "app/store";
+import { getTotals } from "app/slices/cartSlice";
 interface Props {
   data: Data;
 }
 export default function Review({ data }: Props) {
-  const cart = useSelector((state: RootState) => state.cart);
+  let cart = useSelector((state: RootState) => state.cart);
+  const { cartTotalQuantity, cartTotalAmount } = useSelector(getTotals);
+  cart = { ...cart, cartTotalQuantity, cartTotalAmount };
   const products = cart.cartItems.map((product) => ({
     name: product.title,
     desc: truncateString(product.description),

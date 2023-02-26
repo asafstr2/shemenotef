@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
   addToCart,
@@ -7,6 +7,7 @@ import {
   getTotals,
   removeFromCart,
   translateCart,
+  applyCoupon,
 } from "app/slices/cartSlice";
 import Card from "components/cards/CardForCart";
 import { Link, useNavigate } from "react-router-dom";
@@ -15,67 +16,23 @@ import { CURRENCY, shipping } from "util/const";
 import { translate } from "util/translate";
 import { RootState } from "app/store";
 import {
-  MainWrapper,
-  Title,
-  subtext,
-  button,
-  flexText,
-  flexAllign,
-  total,
+  RootWrapper,
+  TitleWrapper,
+  Subtext,
+  FlexText,
+  FlexAlign,
+  Total,
 } from "./Cart.style";
-const classes = {
-  root: {
-    display: "flex",
-    justifyContent: "space-around",
-    flexDirection: "column",
-    "& .MuiButton-containedPrimary": {
-      backgroundColor: "#53c4ac",
-    },
-  },
-  title: {
-    display: "flex",
-    width: "80%",
-    margin: "auto",
-    justifyContent: "space-between",
-    alignItems: "center",
-    borderBottom: "1px solid lightgrey",
-  },
-  subtext: {
-    color: "grey",
-    marginInlineEnd: "3%",
-  },
-  button: {
-    margin: "80px",
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "center",
-  },
-  flextext: {
-    color: "grey",
-    display: "flex",
-    margin: "auto",
-    width: "76%",
-    justifyContent: "space-between",
-    marginTop: "3%",
-  },
-  flexallign: {
-    flex: 1,
-    textAlign: "end",
-  },
-  total: {
-    flex: 1,
-    textAlign: "end",
-    fontSize: "1.5rem",
-  },
-};
+import { TextField } from "@mui/material";
+
 const Cart = () => {
-  const cart = useSelector((state: RootState) => state.cart);
+  let cart = useSelector((state: RootState) => state.cart);
   const lang = useSelector((state: RootState) => state.lang.lang);
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  useEffect(() => {
-    dispatch(getTotals({}));
-  }, [cart, dispatch]);
+  const [cupponsField, setCupponsFields] = useState("");
+  const { cartTotalQuantity, cartTotalAmount } = useSelector(getTotals);
+  cart = { ...cart, cartTotalQuantity, cartTotalAmount };
   useEffect(() => {
     dispatch(translateCart({}));
   }, [dispatch, lang]);
@@ -83,37 +40,36 @@ const Cart = () => {
     return <Link to="/">Add some items </Link>;
   }
   return (
-    //@ts-ignore *
-    <div style={classes.root}>
-      <div style={classes.title}>
-        <h2>{translate("Order")} </h2>
-        <h5 style={classes.subtext}>{translate("EditCart")}</h5>
-      </div>
+    <RootWrapper>
+      <TitleWrapper>
+        <h2>{translate("Order")}</h2>
+        <Subtext>{translate("EditCart")}</Subtext>
+      </TitleWrapper>
       <div>
         {cart.cartItems.map((product) => (
           <Card {...product} key={product._id} />
         ))}
       </div>
-      <div style={classes.flextext}>
+      <FlexText>
         <span>{translate("Subtotal")}</span>
-        <span
-          //  @ts-ignore
-          style={classes.flexallign}
-        >{`${cart.cartTotalAmount}${CURRENCY}`}</span>
-      </div>
-      <div style={classes.flextext}>
+        <FlexAlign>{`${cart.cartTotalAmount}${CURRENCY}`}</FlexAlign>
+      </FlexText>
+      <FlexText>
         <span>{translate("Shipping")} </span>
-        {/* @ts-ignore */}
-        <span style={classes.flexallign}>{`${shipping}${CURRENCY}`}</span>
-      </div>
-      <div style={{ ...classes.flextext, color: "black" }}>
+        <FlexAlign>{`${shipping}${CURRENCY}`}</FlexAlign>
+      </FlexText>
+      <FlexText>
         <span> {translate("total")} </span>
-        {/* @ts-ignore */}
-        <span style={classes.total}>{`${Number(
-          shipping + cart.cartTotalAmount
-        )}${CURRENCY}`}</span>
-      </div>
-      <div style={classes.button}>
+        <Total>{`${Number(shipping + cart.cartTotalAmount)}${CURRENCY}`}</Total>
+      </FlexText>
+      <div
+        style={{
+          margin: "80px",
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+        }}
+      >
         <Button
           onClick={() => navigate("/checkout")}
           variant="contained"
@@ -123,8 +79,23 @@ const Cart = () => {
         >
           {translate("proceedToCheckOut")}
         </Button>
+        <form
+          onSubmit={(e) => {
+            e.preventDefault();
+            dispatch(applyCoupon(cupponsField));
+          }} //@ts-ignore
+        >
+          <TextField
+            name={"cuppons"}
+            value={cupponsField}
+            onChange={(e) => setCupponsFields(e.target.value)}
+            required
+            id={"cuppons"}
+            label={translate("cuppons")}
+          />
+        </form>
       </div>
-    </div>
+    </RootWrapper>
   );
 };
 

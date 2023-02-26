@@ -11,7 +11,6 @@ import {
   addToCart,
   clearCart,
   decreaseCart,
-  getTotals,
   removeFromCart,
 } from "app/slices/cartSlice";
 interface Props {

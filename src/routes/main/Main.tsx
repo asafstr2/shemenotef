@@ -5,6 +5,8 @@ import Profile from "components/profile/Profile";
 import Checkout from "routes/checkout/Checkout";
 import AddProduct from "routes/admin/AddProduct";
 import Homepage from "components/Homepage";
+import Test from "components/test/Test";
+import Header from "components/navbar/Header";
 import ProductAutoCompleate from "components/ProductAutoCompleateAntd";
 import { Routes, Route, useLocation } from "react-router-dom";
 import ModalRoutes from "routes/ModalRoutes";
@@ -55,7 +57,7 @@ function Main() {
   }, [lang, refetch]);
   return (
     <div>
-      <NavBar />
+      <Header />
       <MainWrapper>
         <ProfileRoute />
         <ModalRoutes />
@@ -91,6 +93,12 @@ function Main() {
             path="/"
             element={
               <Homepage products={products} productLoading={productLoading} />
+            }
+          />
+          <Route
+            path="/test"
+            element={
+              <Test products={products} productLoading={productLoading} />
             }
           />
         </Routes>

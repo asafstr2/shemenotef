@@ -45,7 +45,7 @@ function ProductPage() {
     zIndex: 1600,
   };
   return (
-    <Card sx={{ maxWidth: "50vw", maxHeight: "50vh" }}>
+    <Card sx={{ maxWidth: "100%", maxHeight: "50vh" }}>
       <CardActionArea>
         <div>
           <Carusale

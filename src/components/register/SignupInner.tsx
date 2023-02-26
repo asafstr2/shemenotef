@@ -118,7 +118,7 @@ function SignupInner() {
       <DialogTitle //@ts-ignore
         style={classes.header}
       >
-        {translate("Signup")}
+        {authType === "signup" ? translate("Signup") : translate("Signin")}
       </DialogTitle>
 
       <Form
