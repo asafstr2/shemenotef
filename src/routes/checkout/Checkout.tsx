@@ -10,12 +10,14 @@ import Button from "@mui/material/Button";
 import Link from "@mui/material/Link";
 import Typography from "@mui/material/Typography";
 import AddressForm from "./AddressForm";
-import PaymentForm from "./PaymentForm";
 import Review from "./Review";
 import { translate } from "util/translate";
 import { Data } from "./types";
 import { usePayMutation } from "app/services/paymant";
-
+import { RootState } from "app/store";
+import { useSelector } from "react-redux";
+import { getTotals } from "app/slices/cartSlice";
+import LoaderButton from "components/buttons/LoaderButton";
 function Copyright() {
   return (
     <Typography variant="body2" color="text.secondary" align="center">
@@ -48,7 +50,9 @@ function getStepContent(
 
 export default function Checkout() {
   const [pay, { isLoading }] = usePayMutation();
-
+  let cart = useSelector((state: RootState) => state.cart);
+  const { cartTotalQuantity, cartTotalAmount } = useSelector(getTotals);
+  cart = { ...cart, cartTotalQuantity, cartTotalAmount };
   const steps = [
     translate("ShippingAddress"),
     // translate("PaymentDetails"),
@@ -59,21 +63,9 @@ export default function Checkout() {
     shipping: {},
     payment: {},
   });
-  console.log({ data });
+  console.log({ cart });
 
-  const dummy = {
-    UserId: "300753316",
-    ClientName: "asaf",
-    ClientLName: "strilitz",
-    street: "hashked 24",
-    city: "shderot",
-    zip: "12345",
-    phone: "0549012568",
-    cell: "0549012568",
-    email: "asafstr2@gmail.com",
-  };
   const handleNext = async () => {
-    console.log({ activeStep });
     if (activeStep === steps.length - 1) {
       const { shipping } = data;
       const dataToSend = {
@@ -85,11 +77,16 @@ export default function Checkout() {
         phone: shipping.phone,
         cell: shipping.phone,
         email: shipping.email,
+        products: Object.fromEntries(
+          cart.cartItems.map(({ _id, cartQuantity: quantity }) => [
+            _id,
+            quantity,
+          ])
+        ),
+        couponCodes: cart.couponCodes,
       };
-      const url = (await pay(dataToSend).unwrap()) as { paytmantUrl: string };
-
-      console.log({ url });
-      return (window.location.href = url.paytmantUrl);
+      const url = (await pay(dataToSend).unwrap()) as { paymantUrl: string };
+      return (window.location.href = url.paymantUrl);
     } else setActiveStep(activeStep + 1);
   };
 
@@ -109,8 +106,8 @@ export default function Checkout() {
             {translate("Checkout")}
           </Typography>
           <Stepper activeStep={activeStep} sx={{ pt: 3, pb: 5 }}>
-            {steps.map((label) => (
-              <Step key={label}>
+            {steps.map((label, i) => (
+              <Step key={label + i}>
                 <StepLabel>{label}</StepLabel>
               </Step>
             ))}
@@ -130,20 +127,32 @@ export default function Checkout() {
                 {getStepContent(activeStep, setData, data)}
                 <Box sx={{ display: "flex", justifyContent: "flex-end" }}>
                   {activeStep !== 0 && (
-                    <Button onClick={handleBack} sx={{ mt: 15, ml: 1 }}>
+                    <Button
+                      onClick={handleBack}
+                      sx={{ mt: 15, ml: 1 }}
+                      disabled={isLoading}
+                    >
                       {translate("Back")}
                     </Button>
                   )}
 
-                  <Button
-                    variant="contained"
-                    onClick={handleNext}
-                    sx={{ mt: 15, ml: 6 }}
-                  >
-                    {activeStep === steps.length - 1
-                      ? translate("placeOrder")
-                      : translate("next")}
-                  </Button>
+                  {activeStep !== steps.length - 1 ? (
+                    <Button
+                      variant="contained"
+                      onClick={handleNext}
+                      sx={{ mt: 15, ml: 6 }}
+                    >
+                      {translate("next")}
+                    </Button>
+                  ) : (
+                    <LoaderButton
+                      sx={{ mt: 15, ml: 6 }}
+                      handleSubmit={handleNext}
+                      buttonText={translate("placeOrder")}
+                      variant="contained"
+                      loading={isLoading}
+                    />
+                  )}
                 </Box>
               </React.Fragment>
             )}

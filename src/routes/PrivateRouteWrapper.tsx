@@ -3,9 +3,9 @@ import { useSelector } from "react-redux";
 import { RootState } from "app/store";
 interface Props {
   children: JSX.Element;
-  goto: string;
+  onLogingGoto: string;
 }
-export default function PrivateRoute({ children, goto }: Props) {
+export default function PrivateRoute({ children, onLogingGoto }: Props) {
   const user = useSelector((state: RootState) => state.user.currentUser);
   const isLoggedin = useSelector(
     (state: RootState) => state.user.authentiicate
@@ -17,7 +17,7 @@ export default function PrivateRoute({ children, goto }: Props) {
     <Navigate
       replace={true}
       to={`/modal/signup`}
-      state={{ modalLocation: { goto: goto, ...location } }}
+      state={{ modalLocation: { goto: onLogingGoto, ...location } }}
     />
   );
 }

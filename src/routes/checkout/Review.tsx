@@ -17,16 +17,22 @@ interface Props {
 export default function Review({ data }: Props) {
   let cart = useSelector((state: RootState) => state.cart);
   const { cartTotalQuantity, cartTotalAmount } = useSelector(getTotals);
-  cart = { ...cart, cartTotalQuantity, cartTotalAmount };
+  cart = {
+    ...cart,
+    cartTotalQuantity,
+    cartTotalAmount: cartTotalAmount + shipping,
+  };
   const products = cart.cartItems.map((product) => ({
     name: product.title,
     desc: truncateString(product.description),
-    price: CURRENCY + product.price,
+    price: CURRENCY + product.price.value * product.cartQuantity,
+    cartQuantity: product.cartQuantity,
   }));
   products.push({
     name: translate("Shipping"),
     desc: "",
     price: CURRENCY + shipping,
+    cartQuantity: 1,
   });
   const addresses = [
     data.shipping?.address1,
@@ -44,21 +50,21 @@ export default function Review({ data }: Props) {
   return (
     <React.Fragment>
       <Typography variant="h6" gutterBottom>
-        Order summary
+        {translate("orderSummery")}
       </Typography>
       <List disablePadding>
-        {products.map((product) => (
-          <ListItem key={product.name} sx={{ py: 1, px: 0, gap: 10 }}>
+        {products.map((product, i) => (
+          <ListItem key={product.name + i} sx={{ py: 1, px: 0, gap: 10 }}>
             <ListItemText
               primary={product.name}
-              secondary={product.desc}
+              secondary={`${product.desc} ${product.cartQuantity}x `}
               sx={{
                 display: "flex",
                 flexDirection: "column",
                 alignItems: "flex-start",
               }}
             />
-            <Typography variant="body2">{product.price}</Typography>
+            <Typography variant="body2">{`${product.price}`}</Typography>
           </ListItem>
         ))}
 
@@ -85,31 +91,14 @@ export default function Review({ data }: Props) {
         </ListItem>
       </List>
       <Grid container spacing={10}>
-        <Grid item xs={12} sm={6}>
+        <Grid item xs={12} sm={12}>
           <Typography variant="h6" gutterBottom sx={{ mt: 3 }}>
             {translate("Shipping")}
           </Typography>
           <Typography
             gutterBottom
           >{`${data.shipping?.firstName} ${data.shipping?.lastName}`}</Typography>
-          <Typography gutterBottom>{addresses.join(", ")}</Typography>
-        </Grid>
-        <Grid item container direction="column" xs={12} sm={6}>
-          <Typography variant="h6" gutterBottom sx={{ mt: 3 }}>
-            {translate("PaymentDetails")}
-          </Typography>
-          <Grid container>
-            {payments.map((payment) => (
-              <React.Fragment key={payment.name}>
-                <Grid item xs={6}>
-                  <Typography gutterBottom>{payment.name}</Typography>
-                </Grid>
-                <Grid item xs={6}>
-                  <Typography gutterBottom>{payment.detail}</Typography>
-                </Grid>
-              </React.Fragment>
-            ))}
-          </Grid>
+          <Typography gutterBottom>{addresses.join(" ")}</Typography>
         </Grid>
       </Grid>
     </React.Fragment>

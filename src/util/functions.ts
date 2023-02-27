@@ -2,6 +2,8 @@
 import { fetchBaseQuery, retry } from "@reduxjs/toolkit/query/react";
 import { BASEURL, jwtToken, saveMe } from "util/const";
 import { RootState } from "app/store";
+import { PaymentSuccessParams } from "app/types/core";
+
 export const truncateString = (str: string, num = 10) =>
   str.length > num ? str.slice(0, num) + "..." : str;
 
@@ -187,3 +189,33 @@ export const isAnAdmin = (state: RootState) => {
   const userRoles = state?.user?.currentUser?.roles;
   return userRoles?.includes("admin");
 };
+
+export function parseUrl(url: string): {
+  protocol: string;
+  host: string;
+  port: string;
+  path: string;
+  queryParameters: PaymentSuccessParams;
+} {
+  const parser = document.createElement("a");
+  parser.href = url;
+
+  const queryParams = {};
+  const query = parser.search.substring(1);
+  const queryItems = query.split("&");
+
+  for (let i = 0; i < queryItems.length; i++) {
+    const item = queryItems[i].split("=");
+    // @ts-ignore
+    queryParams[item[0]] = decodeURIComponent(item[1]);
+  }
+
+  return {
+    protocol: parser.protocol.replace(":", ""),
+    host: parser.hostname,
+    port: parser.port,
+    path: parser.pathname,
+    // @ts-ignore
+    queryParameters: queryParams,
+  };
+}

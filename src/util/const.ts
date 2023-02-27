@@ -183,6 +183,7 @@ const checkoutLanguage = {
     helperTextForCvv: "שלוש ספרות בגב הכרטיס",
     saveCard: "זכור פרטי אשראי",
     CardType: "סוג כרטיס",
+    orderSummery: "פירוט הזמנה",
   },
   [language.english]: {
     Checkout: "Checkout",
@@ -206,13 +207,13 @@ const checkoutLanguage = {
     country: "Country",
     saveAddress: "Use this address for payment details",
     CardType: "Card type",
-
     cardName: "Name on card",
     cardNumber: "Card number",
     expDate: "Expiry date",
     cvv: "CVV",
     helperTextForCvv: "Last three digits on signature strip",
     saveCard: "Remember credit card details for next time",
+    orderSummery: "Order summery",
   },
 };
 

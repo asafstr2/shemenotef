@@ -119,3 +119,33 @@ export interface PaymantData {
   cell: string;
   email: string;
 }
+
+export interface PaymentSuccessParams {
+  Id: string;
+  CCode: string;
+  Amount: number;
+  ACode: string;
+  Order: string;
+  Fild1: string;
+  Fild2: string;
+  Fild3: string;
+  Bank: number;
+  Payments: number;
+  UserId: string;
+  Brand: number;
+  Issuer: number;
+  L4digit: string;
+  street: string;
+  city: string;
+  zip: string;
+  cell: string;
+  Coin: number;
+  Tmonth: number;
+  Tyear: number;
+  Info: string;
+  errMsg: string;
+  Hesh: number;
+  UID: string;
+  SpType: number;
+  BinCard: string;
+}

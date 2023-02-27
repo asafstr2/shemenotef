@@ -27,12 +27,13 @@ import { TextField } from "@mui/material";
 
 const Cart = () => {
   let cart = useSelector((state: RootState) => state.cart);
+  const { cartTotalQuantity, cartTotalAmount } = useSelector(getTotals);
+  cart = { ...cart, cartTotalQuantity, cartTotalAmount };
   const lang = useSelector((state: RootState) => state.lang.lang);
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [cupponsField, setCupponsFields] = useState("");
-  const { cartTotalQuantity, cartTotalAmount } = useSelector(getTotals);
-  cart = { ...cart, cartTotalQuantity, cartTotalAmount };
+
   useEffect(() => {
     dispatch(translateCart({}));
   }, [dispatch, lang]);

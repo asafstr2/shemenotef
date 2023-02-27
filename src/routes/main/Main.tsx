@@ -3,6 +3,7 @@ import Cart from "routes/cart/Cart";
 import Profile from "components/profile/Profile";
 
 import Checkout from "routes/checkout/Checkout";
+import PostPaymant from "routes/checkout/PostPaymant";
 import AddProduct from "routes/admin/AddProduct";
 import Homepage from "components/Homepage";
 import Test from "components/test/Test";
@@ -76,8 +77,16 @@ function Main() {
           <Route
             path="/checkout"
             element={
-              <PrivateRoute goto="/checkout">
+              <PrivateRoute onLogingGoto="/checkout">
                 <Checkout />
+              </PrivateRoute>
+            }
+          />
+          <Route
+            path="/paymantSucess"
+            element={
+              <PrivateRoute onLogingGoto="/paymantSucess">
+                <PostPaymant />
               </PrivateRoute>
             }
           />

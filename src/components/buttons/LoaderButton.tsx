@@ -1,19 +1,11 @@
 import Button from "@mui/material/Button";
-
-interface Props {
+import { ButtonProps } from "@mui/material/Button";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faSpinner } from "@fortawesome/free-solid-svg-icons";
+interface Props extends ButtonProps {
   handleSubmit: () => void;
   loading: boolean;
   buttonText: string;
-  variant?: "contained" | "text" | "outlined";
-  size?: "large" | "small" | "medium";
-  color?:
-    | "error"
-    | "inherit"
-    | "primary"
-    | "secondary"
-    | "info"
-    | "success"
-    | "warning";
 }
 function LoaderButton({
   handleSubmit,
@@ -23,7 +15,12 @@ function LoaderButton({
   ...props
 }: Props) {
   return (
-    <Button variant={variant} onClick={handleSubmit} {...props}>
+    <Button
+      variant={variant}
+      onClick={handleSubmit}
+      {...props}
+      disabled={loading}
+    >
       <div
         style={{
           display: "flex",
@@ -34,7 +31,7 @@ function LoaderButton({
       >
         {loading && (
           <span>
-            <i className="fa fa-spinner fa-spin"></i>{" "}
+            <FontAwesomeIcon icon={faSpinner} spin />
           </span>
         )}
         <span>{buttonText}</span>
