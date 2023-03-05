@@ -1,12 +1,11 @@
 import React, { useEffect, useState } from "react";
 import Cart from "routes/cart/Cart";
-import Profile from "components/profile/Profile";
 
 import Checkout from "routes/checkout/Checkout";
 import PostPaymant from "routes/checkout/PostPaymant";
 import AddProduct from "routes/admin/AddProduct";
-import Homepage from "components/Homepage";
-import Test from "components/test/Test";
+import Homepage from "components/Homepage/Homepage";
+import Footer from "components/footer/footer";
 import Header from "components/navbar/Header";
 import ProductAutoCompleate from "components/ProductAutoCompleateAntd";
 import { Routes, Route, useLocation } from "react-router-dom";
@@ -14,7 +13,6 @@ import ModalRoutes from "routes/ModalRoutes";
 import PrivateRoute from "routes/PrivateRouteWrapper";
 import AdminRoute from "routes/admin/AdminRoute";
 import ProfileRoute from "routes/profileRoutes/ProfileMain";
-import NavBar from "components/navbar/NavBar";
 import { useGetAllProductsQuery } from "app/services/productsApi";
 import { useSelector } from "react-redux";
 import { RootState } from "app/store";
@@ -33,7 +31,7 @@ function Main() {
       refetchOnMountOrArgChange: true,
       pollingInterval: 36000,
       refetchOnReconnect: true,
-      refetchOnFocus: true,
+      refetchOnFocus: false,
     }
   );
 
@@ -58,7 +56,7 @@ function Main() {
   }, [lang, refetch]);
   return (
     <div>
-      <Header />
+      <Header options={options} setOptions={setOptions} lang={lang} />
       <MainWrapper>
         <ProfileRoute />
         <ModalRoutes />
@@ -101,17 +99,15 @@ function Main() {
           <Route
             path="/"
             element={
-              <Homepage products={products} productLoading={productLoading} />
-            }
-          />
-          <Route
-            path="/test"
-            element={
-              <Test products={products} productLoading={productLoading} />
+              <Homepage
+                products={options || products}
+                productLoading={productLoading}
+              />
             }
           />
         </Routes>
       </MainWrapper>
+      <Footer />
     </div>
   );
 }

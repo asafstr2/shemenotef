@@ -10,18 +10,17 @@ function CustomLink({ children, to, ...props }: Props) {
   let match = useMatch({ path: resolved.pathname, end: true });
 
   return (
-    <div>
-      <Link
-        style={{
-          textDecoration: match ? "underline" : "none",
-          opacity: match ? "0.6" : "",
-        }}
-        to={to}
-        {...props}
-      >
-        {children}
-      </Link>
-    </div>
+    <Link
+      style={{
+        textDecoration: "none",
+        opacity: match ? "0.8" : "",
+        borderBottom: match ? "1px solid red" : "",
+      }}
+      to={to}
+      {...props}
+    >
+      {children}
+    </Link>
   );
 }
 

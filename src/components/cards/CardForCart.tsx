@@ -22,6 +22,7 @@ interface Props {
   imageHeight?: number;
   cartQuantity: number;
   price: { value: number; currency: string };
+  createdAt?: string;
 }
 
 function CardForCart(props: Props) {
@@ -32,24 +33,30 @@ function CardForCart(props: Props) {
     imageHeight = 80,
     cartQuantity,
     price,
+    createdAt,
   } = props;
 
   return (
     <>
       <CardWrapper>
         <ImageWrapper>
-          <CardMedia component="img" height={imageHeight} image={image} />
+          <CardMedia
+            component="img"
+            height={imageHeight}
+            width={imageHeight}
+            image={image}
+          />
         </ImageWrapper>
         <TitleWrapper>
           <TitleMain>
-            <Typography gutterBottom variant="h5" component="span" noWrap>
+            <Typography gutterBottom variant="body1" component="p" noWrap>
               {title}
             </Typography>
           </TitleMain>
           <TitleSub>
-            <Typography variant="h5" component="span" noWrap>
-              {deliveryDate ? (
-                <Moment format="DD/MM/YY">{deliveryDate}</Moment>
+            <Typography variant="overline" component="p" noWrap>
+              {deliveryDate || createdAt ? (
+                <Moment format="DD/MM/YY">{deliveryDate ?? createdAt}</Moment>
               ) : (
                 translate("date not specified")
               )}
@@ -59,9 +66,11 @@ function CardForCart(props: Props) {
         <ButtonWrapper>
           <Button {...props} />
         </ButtonWrapper>
-        <PriceWrapper>
-          <span>{`${cartQuantity * price.value}${price.currency}`}</span>
-        </PriceWrapper>
+        {cartQuantity && price && (
+          <PriceWrapper>
+            <span>{`${cartQuantity * price.value}${price.currency}`}</span>
+          </PriceWrapper>
+        )}
       </CardWrapper>
       <Border />
     </>

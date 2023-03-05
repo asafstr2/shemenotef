@@ -1,6 +1,7 @@
 import { configureStore } from "@reduxjs/toolkit";
 import { setupListeners } from "@reduxjs/toolkit/query";
 import { productsApi, productsApiAdmin } from "app/services/productsApi";
+import { usersApi } from "app/services/userService";
 import { authApi } from "app/services/authService";
 import { payApi } from "app/services/paymant";
 import { rtkQueryErrorOrSuccessLogger } from "app/services/errorOrSuccessMiddleware";
@@ -11,6 +12,7 @@ import language from "app/slices/langSlice";
 
 export const store = configureStore({
   reducer: {
+    [usersApi.reducerPath]: usersApi.reducer,
     [productsApi.reducerPath]: productsApi.reducer,
     [productsApiAdmin.reducerPath]: productsApiAdmin.reducer,
     [authApi.reducerPath]: authApi.reducer,
@@ -26,7 +28,8 @@ export const store = configureStore({
       productsApi.middleware,
       productsApiAdmin.middleware,
       authApi.middleware,
-      payApi.middleware
+      payApi.middleware,
+      usersApi.middleware
     ),
 });
 

@@ -47,6 +47,7 @@ export interface User {
   paymentsirecived: Payment[];
 
   productPurchased: Products[];
+  orders: Order[];
 }
 export interface Review {
   _id: string;
@@ -107,7 +108,11 @@ export interface Cart {
   cartTotalAmount: number;
   couponCodes: string[];
 }
-
+export interface Order {
+  createdAt: string;
+  paymantStatus: string;
+  products: Products[];
+}
 export interface PaymantData {
   UserId: string;
   ClientName: string;

@@ -24,9 +24,7 @@ const userSlice = createSlice({
   initialState,
   reducers: {
     setCurrentUser(state: any, action: { type: any; payload: any }) {
-      console.log(action.payload);
       const user = jwtDecode(action.payload) ?? initialState.currentUser;
-      console.log({ user });
 
       const success = {
         ...state,
@@ -34,7 +32,9 @@ const userSlice = createSlice({
         currentUser: user,
       };
       if (!jwtLcGet()) {
-        toast.success(`welcome back ${action.payload?.firstName}`);
+        console.log({ welcome: action.payload });
+        //@ts-ignore
+        toast.success(`welcome back ${user?.username}`);
       }
       jwtLcSet(action.payload);
 
@@ -48,7 +48,8 @@ const userSlice = createSlice({
         currentUser: { ...user, firstTimeUser: true },
       };
       if (!jwtLcGet()) {
-        toast.success(`welcome ${action.payload?.firstName}`);
+        //@ts-ignore
+        toast.success(`welcome ${user?.username}`);
       }
       jwtLcSet(action.payload);
 

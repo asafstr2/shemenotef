@@ -87,7 +87,19 @@ export default function Checkout() {
       };
       const url = (await pay(dataToSend).unwrap()) as { paymantUrl: string };
       return (window.location.href = url.paymantUrl);
-    } else setActiveStep(activeStep + 1);
+    } else {
+      if (
+        data.shipping.firstName !== "" &&
+        data.shipping.lastName !== "" &&
+        data.shipping.phone !== "" &&
+        data.shipping.city !== "" &&
+        data.shipping.zip !== "" &&
+        data.shipping.country !== ""
+      ) {
+        return setActiveStep(activeStep + 1);
+      }
+      return alert(translate("Please fill all fields"));
+    }
   };
 
   const handleBack = () => {

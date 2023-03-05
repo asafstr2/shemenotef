@@ -22,10 +22,16 @@ import {
   FlexText,
   FlexAlign,
   Total,
+  ButtonWrapper,
+  Footer,
 } from "./Cart.style";
 import { TextField } from "@mui/material";
 
-const Cart = () => {
+const Cart = ({
+  handleCartVisibleChange,
+}: {
+  handleCartVisibleChange?: (val: boolean) => void;
+}) => {
   let cart = useSelector((state: RootState) => state.cart);
   const { cartTotalQuantity, cartTotalAmount } = useSelector(getTotals);
   cart = { ...cart, cartTotalQuantity, cartTotalAmount };
@@ -63,39 +69,39 @@ const Cart = () => {
         <span> {translate("total")} </span>
         <Total>{`${Number(shipping + cart.cartTotalAmount)}${CURRENCY}`}</Total>
       </FlexText>
-      <div
-        style={{
-          margin: "80px",
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
-        }}
-      >
-        <Button
-          onClick={() => navigate("/checkout")}
-          variant="contained"
-          color="primary"
-          fullWidth={false}
-          size="large"
-        >
-          {translate("proceedToCheckOut")}
-        </Button>
-        <form
-          onSubmit={(e) => {
-            e.preventDefault();
-            dispatch(applyCoupon(cupponsField));
-          }} //@ts-ignore
-        >
-          <TextField
-            name={"cuppons"}
-            value={cupponsField}
-            onChange={(e) => setCupponsFields(e.target.value)}
-            required
-            id={"cuppons"}
-            label={translate("cuppons")}
-          />
-        </form>
-      </div>
+      <Footer>
+        {/* <ButtonWrapper>
+          <form
+            onSubmit={(e) => {
+              e.preventDefault();
+              dispatch(applyCoupon(cupponsField));
+            }} //@ts-ignore
+          >
+            <TextField
+              name={"cuppons"}
+              value={cupponsField}
+              onChange={(e) => setCupponsFields(e.target.value)}
+              required
+              id={"cuppons"}
+              label={translate("cuppons")}
+            />
+          </form>
+        </ButtonWrapper> */}
+        <ButtonWrapper>
+          <Button
+            onClick={() => {
+              handleCartVisibleChange?.(false);
+              navigate("/checkout");
+            }}
+            variant="contained"
+            color="primary"
+            fullWidth={true}
+            size="small"
+          >
+            {translate("proceedToCheckOut")}
+          </Button>
+        </ButtonWrapper>
+      </Footer>
     </RootWrapper>
   );
 };

@@ -3,6 +3,8 @@ import styled from "styled-components";
 import { useSelector } from "react-redux";
 import { RootState } from "app/store";
 import Card from "components/cards/CardForCart";
+import { useGetUserQuery } from "app/services/userService";
+import { User } from "app/types/core";
 
 const ProfileContainer = styled.div`
   max-width: 1200px;
@@ -20,6 +22,7 @@ const UserInfoWrapper = styled.div`
   width: 30%;
   border: 1px solid #ddd;
   padding: 20px;
+  margin: 1%;
 `;
 
 const UserInfoHeader = styled.h2`
@@ -38,6 +41,7 @@ const CartWrapper = styled.div`
   width: 30%;
   border: 1px solid #ddd;
   padding: 20px;
+  margin: 1%;
 `;
 
 const CartHeader = styled.h2`
@@ -65,10 +69,17 @@ const PurchaseHeader = styled.h2`
 `;
 
 const ProfilePage = () => {
-  const user = useSelector((state: RootState) => state.user);
-  const currentUser = user.currentUser;
   const cart = useSelector((state: RootState) => state.cart);
+  const { data: currentUser, isLoading: dataLoading } = useGetUserQuery(
+    {},
+    {
+      refetchOnMountOrArgChange: false,
+    }
+  ) as { data: User; isLoading: boolean };
+  console.log({ currentUser });
+  if (dataLoading) return <p>loading</p>;
 
+  const { orders, productPurchased } = currentUser;
   return (
     <ProfileContainer>
       <ProfileWrapper>
@@ -93,10 +104,30 @@ const ProfilePage = () => {
             cart.cartItems.map((item) => <Card {...item} key={item._id} />)
           )}
         </CartWrapper>
+        <CartWrapper>
+          <CartHeader>Last purchased product </CartHeader>
+          {productPurchased.length === 0 ? (
+            <div>No past purchases</div>
+          ) : (
+            productPurchased.map((item) => <Card {...item} key={item._id} />)
+          )}
+        </CartWrapper>
       </ProfileWrapper>
       <PurchaseWrapper>
         <PurchaseHeader>Past Purchases</PurchaseHeader>
-        <div>No past purchases</div>
+        {orders.length === 0 ? (
+          <div>No past purchases</div>
+        ) : (
+          orders.map((order) => (
+            <div>
+              {" "}
+              <p>order status {order.paymantStatus}</p>
+              {order.products.map((item) => (
+                <Card {...item} key={item._id} />
+              ))}
+            </div>
+          ))
+        )}
       </PurchaseWrapper>
     </ProfileContainer>
   );

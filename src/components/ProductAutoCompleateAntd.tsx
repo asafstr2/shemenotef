@@ -6,8 +6,8 @@ import { AutoComplete } from "antd";
 import SearchIcon from "@mui/icons-material/Search";
 import { translate } from "util/translate";
 import { language, Language } from "util/const";
-import "./css.css";
 import { Products } from "app/types/core";
+import styled from "styled-components";
 
 interface Props {
   className?: string;
@@ -16,6 +16,38 @@ interface Props {
   refetch?: () => void;
   lang: Language;
 }
+
+const Container = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-inline-start: auto;
+  margin-inline-end: 50px;
+
+  @media screen and (max-width: 768px) {
+    margin-inline-end: 0;
+    margin-right: 10px;
+  }
+`;
+
+const SearchInput = styled(AutoComplete)`
+  width: 200px;
+  transition: width 0.2s ease;
+  &:focus-within {
+    width: 500px;
+  }
+  @media screen and (max-width: 768px) {
+    width: 80px;
+
+    & input {
+      font-size: 12px;
+    }
+    &:focus-within {
+      width: 200px;
+    }
+  }
+`;
+
 export default function Search({
   className,
   options,
@@ -23,7 +55,6 @@ export default function Search({
   refetch,
   lang,
 }: Props) {
-  // const [options, setOptions] = React.useState([]);
   const { Option } = AutoComplete;
   const [searchTerm, setSearchTerm] = useState("");
   const debouncedSearchTerm = useDebounce(searchTerm, 500);
@@ -33,23 +64,20 @@ export default function Search({
         options?.filter((product) => product.title === productName) ?? []
       );
   };
-  useEffect(
-    () => {
-      if (debouncedSearchTerm || searchTerm.length === 0) {
-        searchCharacters(debouncedSearchTerm).then((results) => {
-          console.log({ search: results });
-          if (results) {
-            setOptions && setOptions(results);
-          } else {
-            setOptions && setOptions([]);
-          }
-        });
-      } else {
-        setOptions && setOptions([]);
-      }
-    },
-    [debouncedSearchTerm, searchTerm.length, setOptions] // Only call effect if debounced search term changes
-  );
+  useEffect(() => {
+    if (debouncedSearchTerm || searchTerm.length === 0) {
+      searchCharacters(debouncedSearchTerm).then((results) => {
+        console.log({ search: results });
+        if (results) {
+          setOptions && setOptions(results);
+        } else {
+          setOptions && setOptions([]);
+        }
+      });
+    } else {
+      setOptions && setOptions([]);
+    }
+  }, [debouncedSearchTerm, searchTerm.length, setOptions]);
 
   // API search function
   function searchCharacters(search: string) {
@@ -70,22 +98,13 @@ export default function Search({
   }
 
   return (
-    <div
-      style={{
-        display: "flex",
-        marginRight: "10px",
-        alignItems: "center",
-        justifyContent: "center",
-      }}
-      className={className}
-    >
+    <Container className={className}>
       <SearchIcon />
-      <AutoComplete
-        style={{ width: "100%" }}
+      <SearchInput
         value={searchTerm}
-        onSelect={(value) => handleChange(value)}
+        onSelect={(value) => handleChange(value as string)}
         onSearch={(searchText) => setSearchTerm(searchText)}
-        onChange={(searchText) => setSearchTerm(searchText)}
+        onChange={(searchText) => setSearchTerm(searchText as string)}
         filterOption
         placeholder={translate("Search")}
         notFoundContent="no results"
@@ -104,7 +123,7 @@ export default function Search({
               : product.title}
           </Option>
         ))}
-      </AutoComplete>
-    </div>
+      </SearchInput>
+    </Container>
   );
 }

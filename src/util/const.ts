@@ -184,6 +184,7 @@ const checkoutLanguage = {
     saveCard: "זכור פרטי אשראי",
     CardType: "סוג כרטיס",
     orderSummery: "פירוט הזמנה",
+    "Please fill all fields": "נא למלא את כל השדות",
   },
   [language.english]: {
     Checkout: "Checkout",
@@ -214,6 +215,7 @@ const checkoutLanguage = {
     helperTextForCvv: "Last three digits on signature strip",
     saveCard: "Remember credit card details for next time",
     orderSummery: "Order summery",
+    "Please fill all fields": "Please fill all fields",
   },
 };
 

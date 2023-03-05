@@ -8,11 +8,21 @@ import { Image } from "antd";
 import { LeftOutlined, RightOutlined } from "@ant-design/icons";
 import "./Carusale.css";
 import { Products } from "app/types/core";
+import styled from "styled-components";
 
 interface Props {
   products: Products[];
   productLoading: boolean;
 }
+
+export const CarusaleContainer = styled.div`
+  width: 500px;
+  height: 206px;
+  margin: auto;
+  @media only screen and (max-width: 768px) {
+    width: 300px;
+  }
+`;
 
 function Carusale({ products, productLoading }: Props) {
   const [photoIndex, setPhotoIndex] = useState(0);
@@ -39,7 +49,7 @@ function Carusale({ products, productLoading }: Props) {
           }
         />
       )}
-      <div style={{ width: "60%", height: "206px", margin: "auto" }}>
+      <CarusaleContainer>
         <Carousel
           autoplay
           arrows
@@ -48,7 +58,6 @@ function Carusale({ products, productLoading }: Props) {
         >
           {products?.map((product) => (
             <div
-              style={{ width: "100%", margin: "auto" }}
               key={product._id}
               onClick={() => {
                 if (!productid) {
@@ -59,7 +68,6 @@ function Carusale({ products, productLoading }: Props) {
             >
               {productid ? (
                 <Image
-                  style={{ margin: "auto", objectFit: "contain" }}
                   width="100%"
                   height="260px"
                   src={product.image}
@@ -67,7 +75,6 @@ function Carusale({ products, productLoading }: Props) {
                 />
               ) : (
                 <img
-                  style={{ margin: "auto", objectFit: "contain" }}
                   height="260px"
                   width="100%"
                   src={product.image}
@@ -77,7 +84,7 @@ function Carusale({ products, productLoading }: Props) {
             </div>
           ))}
         </Carousel>
-      </div>
+      </CarusaleContainer>
     </>
   );
 }

@@ -1,6 +1,6 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
-import { Button, Avatar } from "antd";
+import { Button, Avatar, Popover } from "antd";
 import { ShoppingCartOutlined } from "@ant-design/icons";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
@@ -11,6 +11,10 @@ import { RootState } from "app/store";
 import AvatarLogin from "./AvatarLogin";
 import LanguageButton from "components/buttons/langbuttonNoText";
 import { translate } from "util/translate";
+import Cart from "routes/cart/Cart";
+import Search from "components/ProductAutoCompleateAntd";
+import { Language } from "util/const";
+import { Products } from "app/types/core";
 
 const HeaderContainer = styled.header`
   position: fixed;
@@ -24,7 +28,6 @@ const HeaderContainer = styled.header`
 
 const HeaderWrapper = styled.div`
   display: flex;
-  justify-content: space-between;
   align-items: center;
   padding: 20px;
   background-color: #fff;
@@ -40,6 +43,7 @@ const Logo = styled.h1`
 const HeaderRight = styled.div`
   display: flex;
   align-items: center;
+  gap: 10px;
 `;
 
 const StyledAvatar = styled(Avatar)`
@@ -51,13 +55,34 @@ const StyledLoginAvatar = styled(AvatarLogin)`
   cursor: pointer;
 `;
 
-const StyledButton = styled(Button)`
-  margin-inline-end: 10px;
+const CartPopoverContent = styled.div`
+  width: 500px;
+  padding: 20px;
+  @media only screen and (max-width: 768px) {
+    width: 300px;
+  }
 `;
-
-const Header = () => {
+interface Props {
+  className?: string;
+  options: Products[];
+  setOptions: React.Dispatch<React.SetStateAction<Products[]>>;
+  refetch?: () => void;
+  lang: Language;
+}
+const Header = (props: Props) => {
   const dispatch = useDispatch();
   const { cartTotalQuantity } = useSelector(getTotals);
+  const [cartVisible, setCartVisible] = useState(false);
+
+  const handleCartVisibleChange = (visible: boolean) => {
+    setCartVisible(visible);
+  };
+
+  const cartPopoverContent = (
+    <CartPopoverContent>
+      <Cart handleCartVisibleChange={handleCartVisibleChange} />
+    </CartPopoverContent>
+  );
 
   return (
     <HeaderContainer>
@@ -65,15 +90,23 @@ const Header = () => {
         <NavLink to="/">
           <Logo>{translate("shemenOtef")}</Logo>
         </NavLink>
+        <Search {...props} />
         <HeaderRight>
           <LanguageButton />
 
           <StyledLoginAvatar />
-          <NavLink to="/cart">
+          <Popover
+            title="My Cart"
+            content={cartPopoverContent}
+            trigger="click"
+            visible={cartVisible}
+            onVisibleChange={handleCartVisibleChange}
+            placement="bottomRight"
+          >
             <Badge badgeContent={cartTotalQuantity} color="info">
               <StyledAvatar size="large" icon={<ShoppingCartOutlined />} />
             </Badge>
-          </NavLink>
+          </Popover>
         </HeaderRight>
       </HeaderWrapper>
     </HeaderContainer>
