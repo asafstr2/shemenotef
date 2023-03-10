@@ -4,8 +4,14 @@ export const coupons = {
   "no-shipping": { value: shipping, operator: "-" },
   "10%off": { value: 0.9, operator: "*" },
 };
-export const BASEURLFAKE = "https://fakestoreapi.com/";
-export const BASEURL = "http://localhost:8085/api";
+const prodGateWay = false;
+export const BASEURL =
+  (!process.env.NODE_ENV || process.env.NODE_ENV === "development") &&
+  !prodGateWay
+    ? "http://localhost:8085/api"
+    : "https://shemen-otef-server.onrender.com/api";
+
+console.log({ env: process.env.NODE_ENV });
 export const testJWT =
   "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJwYXNzIjo2MCwiaWQiOiI2MWQ5NzNlYzUwOWJiOTNjMTRlMjcxZTIiLCJmcmllbmRzSW52aXRlZCI6W10sImVtYWlsIjoiYXNhZnN0cjJAZ21haWwuY29tIiwiY3JlYXRlZEF0IjoiMjAyMi0wMS0wOFQxMToyMjoyMC4xODRaIiwiaWF0IjoxNjQxNjQ2ODI2fQ.hCJfOJGAW8UJPrCEo2tGBuwI7eQixyz-Z4OT6IUyggU";
 export const jwtToken = "jwtToken";
