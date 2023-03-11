@@ -96,11 +96,10 @@ const Header = (props: Props) => {
 
           <StyledLoginAvatar />
           <Popover
-            title="My Cart"
             content={cartPopoverContent}
             trigger="click"
-            visible={cartVisible}
-            onVisibleChange={handleCartVisibleChange}
+            open={cartVisible}
+            onOpenChange={handleCartVisibleChange}
             placement="bottomRight"
           >
             <Badge badgeContent={cartTotalQuantity} color="info">
