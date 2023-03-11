@@ -28,6 +28,7 @@ export default function Google({
   noText,
 }: Props) {
   let responseGoogle = async (res: any) => {
+    console.log({ gres: res });
     let { profileObj } = res;
     await auth({
       ...state,
@@ -63,7 +64,7 @@ export default function Google({
         )}
         clientId={
           process.env.REACT_APP_GOOGLE_LOGIN_ID ||
-          "659438913448-e0343um61gtpmpdtp9jhr1hfu1r160he.apps.googleusercontent.com"
+          "1029728474590-g31as7sp1r8u2n2gsiklb1jmcjq41ac1.apps.googleusercontent.com"
         }
         buttonText="Login"
         onSuccess={responseGoogle}
