@@ -4,14 +4,7 @@ import styled from "styled-components";
 import { fetchingUserFromGoogle } from "util/functions";
 import { ReactComponent as GoogleIcon } from "icons/GoogleIconColor.svg";
 
-const classes = {
-  socialMedia: {
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "center",
-    cursor: "pointer",
-  },
-};
+
 interface Props {
   state: any;
   extended: boolean;
@@ -23,10 +16,7 @@ interface Props {
   noText: boolean;
 }
 const SocialMediaButton = styled.div`
-display: "flex",
-alignItems: "center",
-justifyContent: "center",
-cursor: "pointer",
+  cursor: pointer;
 `;
 export default function Google({
   state,
@@ -61,10 +51,8 @@ export default function Google({
   });
 
   return (
-    <div>
-      <SocialMediaButton onClick={() => login()}>
-        <GoogleIcon />
-      </SocialMediaButton>
-    </div>
+    <SocialMediaButton onClick={() => login()}>
+      <GoogleIcon />
+    </SocialMediaButton>
   );
 }
