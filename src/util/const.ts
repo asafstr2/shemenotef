@@ -11,7 +11,6 @@ export const BASEURL =
     ? "http://localhost:8085/api"
     : "https://shemen-otef-server.onrender.com/api";
 
-console.log({ env: process.env.NODE_ENV });
 export const testJWT =
   "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJwYXNzIjo2MCwiaWQiOiI2MWQ5NzNlYzUwOWJiOTNjMTRlMjcxZTIiLCJmcmllbmRzSW52aXRlZCI6W10sImVtYWlsIjoiYXNhZnN0cjJAZ21haWwuY29tIiwiY3JlYXRlZEF0IjoiMjAyMi0wMS0wOFQxMToyMjoyMC4xODRaIiwiaWF0IjoxNjQxNjQ2ODI2fQ.hCJfOJGAW8UJPrCEo2tGBuwI7eQixyz-Z4OT6IUyggU";
 export const jwtToken = "jwtToken";
