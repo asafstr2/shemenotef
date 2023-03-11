@@ -25,7 +25,7 @@ export const CartSummaryWrapper = styled.div`
 `;
 
 export const ButtonWrapper = styled.div`
-  width: 33%;
+  max-width: 85%;
 `;
 
 export const CheckoutButton = styled.button`
