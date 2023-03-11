@@ -1,5 +1,7 @@
 import React from "react";
-import GoogleLogin from "@caranmegil/react-google-login";
+import { useGoogleLogin } from "@react-oauth/google";
+import styled from "styled-components";
+import { fetchingUserFromGoogle } from "util/functions";
 import { ReactComponent as GoogleIcon } from "icons/GoogleIconColor.svg";
 
 const classes = {
@@ -20,6 +22,12 @@ interface Props {
   ) => void;
   noText: boolean;
 }
+const SocialMediaButton = styled.div`
+display: "flex",
+alignItems: "center",
+justifyContent: "center",
+cursor: "pointer",
+`;
 export default function Google({
   state,
   extended,
@@ -28,16 +36,16 @@ export default function Google({
   noText,
 }: Props) {
   let responseGoogle = async (res: any) => {
-    console.log({ gres: res });
-    let { profileObj } = res;
+    const fetchedUser = await fetchingUserFromGoogle(res.access_token);
+    console.log({ fetchedUser });
     await auth({
       ...state,
       password: "",
       social: true,
-      email: profileObj.email,
-      googleId: profileObj.googleId,
-      username: `${profileObj.givenName} ${profileObj.familyName}`,
-      profileImageUrl: profileObj.imageUrl,
+      email: fetchedUser.email,
+      googleId: fetchedUser.sub,
+      username: `${fetchedUser.given_name} ${fetchedUser.family_name}`,
+      profileImageUrl: fetchedUser.picture,
     });
   };
 
@@ -48,29 +56,15 @@ export default function Google({
       console.log(error);
     }
   };
+  const login = useGoogleLogin({
+    onSuccess: (tokenResponse) => responseGoogle(tokenResponse),
+  });
 
   return (
     <div>
-      <GoogleLogin
-        render={(renderProps: any) => (
-          <div onClick={renderProps.onClick} style={classes.socialMedia}>
-            <GoogleIcon />
-            {!noText && (
-              <span style={{ marginLeft: 6, fontWeight: 600 }}>
-                {authType === "signin" ? "Log in" : "Join"} with Google
-              </span>
-            )}
-          </div>
-        )}
-        clientId={
-          process.env.REACT_APP_GOOGLE_LOGIN_ID ||
-          "1029728474590-g31as7sp1r8u2n2gsiklb1jmcjq41ac1.apps.googleusercontent.com"
-        }
-        buttonText="Login"
-        onSuccess={responseGoogle}
-        onFailure={responseGoogle}
-        cookiePolicy={"single_host_origin"}
-      />
+      <SocialMediaButton onClick={() => login()}>
+        <GoogleIcon />
+      </SocialMediaButton>
     </div>
   );
 }

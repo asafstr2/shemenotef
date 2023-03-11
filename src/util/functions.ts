@@ -2,7 +2,7 @@
 import { fetchBaseQuery, retry } from "@reduxjs/toolkit/query/react";
 import { BASEURL, jwtToken, saveMe } from "util/const";
 import { RootState } from "app/store";
-import { PaymentSuccessParams } from "app/types/core";
+import { PaymentSuccessParams, GoogleRes } from "app/types/core";
 
 export const truncateString = (str: string, num = 10) =>
   str.length > num ? str.slice(0, num) + "..." : str;
@@ -219,3 +219,16 @@ export function parseUrl(url: string): {
     queryParameters: queryParams,
   };
 }
+
+export const fetchingUserFromGoogle = async (
+  access_token: string
+): Promise<GoogleRes> =>
+  await fetch("https://www.googleapis.com/oauth2/v3/userinfo", {
+    headers: {
+      Authorization: `Bearer ${access_token}`,
+    },
+  })
+    .then((response) => response.json())
+    .catch((error) => {
+      console.error(error);
+    });

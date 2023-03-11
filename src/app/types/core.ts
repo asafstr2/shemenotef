@@ -154,3 +154,13 @@ export interface PaymentSuccessParams {
   SpType: number;
   BinCard: string;
 }
+
+export interface GoogleRes {
+  email: string;
+  given_name: string;
+  family_name: string;
+  id: string;
+  picture: string;
+  name: string;
+  sub: string;
+}
