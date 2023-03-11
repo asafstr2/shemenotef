@@ -1,5 +1,5 @@
 const facebookAppId =
-  process.env.REACT_APP_FACEBOOK_LOGIN_ID || 734961274940157;
+  process.env.REACT_APP_FACEBOOK_LOGIN_ID || 231335762601070;
 
 export function initFacebookSdk() {
   return new Promise((resolve) => {
@@ -11,7 +11,7 @@ export function initFacebookSdk() {
         appId: facebookAppId,
         cookie: true,
         xfbml: true,
-        version: "v8.0",
+        version: "v16.0",
       });
     };
 
