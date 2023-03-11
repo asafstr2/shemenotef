@@ -1,4 +1,4 @@
-import * as React from "react";
+import React, { useEffect, useState } from "react";
 import Grid from "@mui/material/Grid";
 import Typography from "@mui/material/Typography";
 import TextField from "@mui/material/TextField";
@@ -10,9 +10,15 @@ import { Data } from "./types";
 interface Props {
   step?: number;
   setData: React.Dispatch<React.SetStateAction<Data>>;
+  setAllFieldsFilled: React.Dispatch<React.SetStateAction<boolean>>;
   data: Data;
 }
-export default function AddressForm({ step, setData, data }: Props) {
+export default function AddressForm({
+  step,
+  setData,
+  data,
+  setAllFieldsFilled,
+}: Props) {
   const handleChange = (e: any) => {
     setData((prev: Data) => ({
       ...prev,
@@ -23,6 +29,15 @@ export default function AddressForm({ step, setData, data }: Props) {
       },
     }));
   };
+
+  useEffect(() => {
+    const fields = Object.values(data.shipping);
+    if (fields.length < 8) {
+      return setAllFieldsFilled(false);
+    }
+    const isFilled = fields.every((field) => field.trim() !== "");
+    setAllFieldsFilled(isFilled);
+  }, [data, setAllFieldsFilled]);
   return (
     <React.Fragment>
       <Typography variant="h6" gutterBottom>

@@ -34,11 +34,19 @@ function Copyright() {
 function getStepContent(
   step: number,
   setData: React.Dispatch<React.SetStateAction<Data>>,
-  data: Data
+  data: Data,
+  setAllFieldsFilled: React.Dispatch<React.SetStateAction<boolean>>
 ) {
   switch (step) {
     case 0:
-      return <AddressForm step={step} setData={setData} data={data} />;
+      return (
+        <AddressForm
+          step={step}
+          setData={setData}
+          data={data}
+          setAllFieldsFilled={setAllFieldsFilled}
+        />
+      );
     // case 1:
     //   return <PaymentForm step={step} setData={setData} data={data} />;
     case 1:
@@ -49,6 +57,8 @@ function getStepContent(
 }
 
 export default function Checkout() {
+  const [allFieldsFilled, setAllFieldsFilled] = useState(false);
+
   const [pay, { isLoading }] = usePayMutation();
   let cart = useSelector((state: RootState) => state.cart);
   const { cartTotalQuantity, cartTotalAmount } = useSelector(getTotals);
@@ -87,14 +97,7 @@ export default function Checkout() {
       const url = (await pay(dataToSend).unwrap()) as { paymantUrl: string };
       return (window.location.href = url.paymantUrl);
     } else {
-      if (
-        data.shipping.firstName !== "" &&
-        data.shipping.lastName !== "" &&
-        data.shipping.phone !== "" &&
-        data.shipping.city !== "" &&
-        data.shipping.zip !== "" &&
-        data.shipping.country !== ""
-      ) {
+      if (allFieldsFilled) {
         return setActiveStep(activeStep + 1);
       }
       return alert(translate("Please fill all fields"));
@@ -135,7 +138,7 @@ export default function Checkout() {
               </React.Fragment>
             ) : (
               <React.Fragment>
-                {getStepContent(activeStep, setData, data)}
+                {getStepContent(activeStep, setData, data, setAllFieldsFilled)}
                 <Box sx={{ display: "flex", justifyContent: "flex-end" }}>
                   {activeStep !== 0 && (
                     <Button
