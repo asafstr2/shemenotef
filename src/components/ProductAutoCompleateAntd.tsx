@@ -37,7 +37,7 @@ const SearchInput = styled(AutoComplete)`
     width: 500px;
   }
   @media screen and (max-width: 768px) {
-    width: 60px;
+    width: 20px;
 
     & input {
       font-size: 12px;
