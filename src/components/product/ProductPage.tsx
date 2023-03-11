@@ -47,8 +47,7 @@ function ProductPage() {
     _id,
     images,
   }: Props = location?.state?.props;
-  const path = "https://shemen-otef.onrender.com" + location.pathname;
-  console.log({ location });
+  const path = `https://shemen-otef.onrender.com/product/${_id}/qr`;
   const imagesPreperation = (images: any) => {
     return images.map((cluodineryImage: any, i: number) => ({
       image: cluodineryImage.secure_url,

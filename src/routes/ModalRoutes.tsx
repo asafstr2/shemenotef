@@ -2,7 +2,7 @@ import React from "react";
 import { Routes, Route, useLocation } from "react-router-dom";
 import Modal from "components/utils/Modal";
 import SignupInner from "components/register/SignupInner";
-import ProductPage from "components/ProductPage";
+import ProductPage from "components/product/ProductPage";
 
 function MoadlRoutes() {
   let location = useLocation();

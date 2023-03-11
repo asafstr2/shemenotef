@@ -18,6 +18,7 @@ import { useSelector } from "react-redux";
 import { RootState } from "app/store";
 import { Products } from "app/types/core";
 import { MainWrapper } from "./Main.style";
+import ProductPageRedirect from "components/product/ProductPageRedirect";
 function Main() {
   let location = useLocation();
   let modalLocation = location?.state?.modalLocation;
@@ -94,6 +95,10 @@ function Main() {
                 <AddProduct />
               </AdminRoute>
             }
+          />
+          <Route
+            path="product/:productId/qr"
+            element={<ProductPageRedirect />}
           />
           <Route
             path="/"

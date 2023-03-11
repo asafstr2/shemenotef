@@ -29,7 +29,7 @@ export const productsApi = createApi({
       },
     }),
     getProductById: build.query({
-      query: (id: string) => `products/${id}`,
+      query: ({ id }: { id: string }) => `products/${id}`,
       providesTags: ["getProductById"],
     }),
     getProductsByCategory: build.query({
