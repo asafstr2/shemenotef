@@ -16,6 +16,7 @@ import { addToCart } from "app/slices/cartSlice";
 import { useDispatch } from "react-redux";
 import NavLink from "components/utils/Link";
 import { useLocation, useParams } from "react-router-dom";
+import Loader from "components/utils/Loader";
 
 interface Props {
   productLoading: boolean;
@@ -25,7 +26,7 @@ function Homepage({ productLoading, products }: Props) {
   const dispatch = useDispatch();
   let location = useLocation();
 
-  if (productLoading) return <>loading</>;
+  if (productLoading) return <Loader />;
   return (
     <Container>
       <Title>Shemen Otef</Title>

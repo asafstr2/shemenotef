@@ -3,6 +3,7 @@ import { usePaymantSucessMutation } from "app/services/paymant";
 import { parseUrl } from "util/functions";
 import { clearCart } from "app/slices/cartSlice";
 import { useDispatch } from "react-redux";
+import Loader from "components/utils/Loader";
 
 function ThankYouPage() {
   const distructeredUrl = parseUrl(window.location.href);
@@ -27,7 +28,7 @@ function ThankYouPage() {
   useEffect(() => {
     verifyPaymant();
   }, []);
-  if (isLoading) return <div>loading</div>;
+  if (isLoading) return <Loader />;
 
   return success ? (
     <div>

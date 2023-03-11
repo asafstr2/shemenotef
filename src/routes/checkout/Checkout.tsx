@@ -63,7 +63,6 @@ export default function Checkout() {
     shipping: {},
     payment: {},
   });
-  console.log({ cart });
 
   const handleNext = async () => {
     if (activeStep === steps.length - 1) {

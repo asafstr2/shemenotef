@@ -11,8 +11,6 @@ interface Props {
 function Modal({ onClose, selectedValue, open = true }: Props) {
   const [openD, setOpenD] = useState(open);
   let navigate = useNavigate();
-  let location = useLocation();
-  console.log({ location });
   const handleClose = () => {
     setOpenD(false);
     onDismiss();

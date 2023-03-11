@@ -21,7 +21,6 @@ export default function Search({ className }: Props) {
   const handleChange = (productName: { title: string | null } | null) => {
     //get all product from redux store
     //filter the products to the matching ones using option
-    console.log(productName);
   };
   React.useEffect(
     () => {

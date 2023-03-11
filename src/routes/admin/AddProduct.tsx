@@ -37,7 +37,6 @@ function AddProduct() {
     setIsUploading(true);
     //@ts-ignore
     const results = await uploadFiles(uploadObject, files);
-    console.log(results);
     setIsUploading(false);
     updateProuduct({ ...form, images: results, image: results[0].secure_url });
   };

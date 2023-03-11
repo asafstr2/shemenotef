@@ -27,7 +27,6 @@ export default function Google({
 }: Props) {
   let responseGoogle = async (res: any) => {
     const fetchedUser = await fetchingUserFromGoogle(res.access_token);
-    console.log({ fetchedUser });
     await auth({
       ...state,
       password: "",

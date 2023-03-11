@@ -32,7 +32,6 @@ const userSlice = createSlice({
         currentUser: user,
       };
       if (!jwtLcGet()) {
-        console.log({ welcome: action.payload });
         //@ts-ignore
         toast.success(`welcome back ${user?.username}`);
       }

@@ -72,63 +72,7 @@ const cartSlice = createSlice({
         return state;
       });
     },
-    // getTotals(state, action) {
-    //   let { total, quantity } = state.cartItems.reduce(
-    //     (cartTotal, cartItem) => {
-    //       const { price, cartQuantity } = cartItem;
-    //       const itemTotal = price.value * cartQuantity;
 
-    //       cartTotal.total += itemTotal;
-    //       cartTotal.quantity += cartQuantity;
-
-    //       return cartTotal;
-    //     },
-    //     {
-    //       total: 0,
-    //       quantity: 0,
-    //     }
-    //   );
-    //   total = parseFloat(total.toFixed(2));
-    //   state.couponCodes.forEach((couponCode) => {
-    //     // @ts-ignore
-    //     const coupon = coupons[couponCode];
-    //     const { value, operator } = coupon;
-
-    //     state.cartTotalAmount = eval(
-    //       `${state.cartTotalAmount} ${operator} ${value}`
-    //     );
-    //   });
-    //   state.cartTotalQuantity = quantity;
-    //   state.cartTotalAmount = total;
-    //   return state;
-    // },
-    // getTotals(state, action) {
-    //   let total = 0;
-    //   let quantity = 0;
-    //   let { cartTotalAmount } = state;
-
-    //   for (const cartItem of state.cartItems) {
-    //     const { price, cartQuantity } = cartItem;
-    //     const itemTotal = price.value * cartQuantity;
-    //     total += itemTotal;
-    //     quantity += cartQuantity;
-    //   }
-
-    //   total = parseFloat(total.toFixed(2));
-
-    //   for (const couponCode of state.couponCodes) {
-    //     // @ts-ignore
-    //     const coupon = coupons[couponCode];
-    //     console.log({ coupons, couponCode, coupon });
-    //     if (!coupon) continue;
-    //     const { value, operator } = coupon;
-    //     cartTotalAmount = eval(`${cartTotalAmount} ${operator} ${value}`);
-    //   }
-    //   console.log({ cartTotalAmount });
-    //   state.cartTotalQuantity = quantity;
-    //   state.cartTotalAmount = cartTotalAmount || total;
-    //   return state;
-    // },
     translateCart(state, action) {
       const lang: "hebrew" | "russian" = JSON.parse(
         localStorage.language ?? '"english"'
@@ -143,7 +87,6 @@ const cartSlice = createSlice({
           cartItem.otherLanguageDescription.default,
       }));
       state.cartItems = mutateResponse;
-      console.log({ mutateResponse, item: state.cartItems });
     },
     clearCart(state, action) {
       state.cartItems = [];
@@ -191,7 +134,6 @@ export const getTotals = (state: RootState) => {
   for (const couponCode of state.cart.couponCodes) {
     // @ts-ignore
     const coupon = coupons[couponCode];
-    console.log({ coupons, couponCode, coupon });
     if (!coupon) continue;
     const { value, operator } = coupon;
     cartTotalAmount = eval(`${total} ${operator} ${value}`);

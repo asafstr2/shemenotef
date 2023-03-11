@@ -5,6 +5,7 @@ import { RootState } from "app/store";
 import Card from "components/cards/CardForCart";
 import { useGetUserQuery } from "app/services/userService";
 import { User } from "app/types/core";
+import Loader from "components/utils/Loader";
 
 const ProfileContainer = styled.div`
   max-width: 1200px;
@@ -76,8 +77,7 @@ const ProfilePage = () => {
       refetchOnMountOrArgChange: false,
     }
   ) as { data: User; isLoading: boolean };
-  console.log({ currentUser });
-  if (dataLoading) return <p>loading</p>;
+  if (dataLoading) return <Loader />;
 
   const { orders, productPurchased } = currentUser;
   return (
