@@ -23,7 +23,6 @@ function Modal({ onClose, selectedValue, open = true }: Props) {
   };
   const modalStyle = {
     height: "80vh",
-    width: "80vw",
     padding: "30px",
     zIndex: 1000,
     display: "flex",
