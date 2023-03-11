@@ -37,7 +37,6 @@ function Main() {
 
   const [products, setProducts] = useState<Products[]>([]);
   useEffect(() => {
-    console.log({ data, productLoading });
     if (
       // @ts-ignore
       data?.length > 0 &&

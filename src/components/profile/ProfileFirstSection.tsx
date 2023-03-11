@@ -98,20 +98,22 @@ const ProfilePage = () => {
         </UserInfoWrapper>
         <CartWrapper>
           <CartHeader>Cart</CartHeader>
-          {cart.cartItems.length === 0 ? (
+          {cart.cartItems?.length === 0 ? (
             <div>No items in cart</div>
           ) : (
-            cart.cartItems.map((item) => <Card {...item} key={item._id} />)
+            cart.cartItems?.map((item) => <Card {...item} key={item._id} />)
           )}
         </CartWrapper>
-        <CartWrapper>
-          <CartHeader>Last purchased product </CartHeader>
-          {productPurchased.length === 0 ? (
-            <div>No past purchases</div>
-          ) : (
-            productPurchased.map((item) => <Card {...item} key={item._id} />)
-          )}
-        </CartWrapper>
+        {productPurchased && (
+          <CartWrapper>
+            <CartHeader>Last purchased product </CartHeader>
+            {productPurchased?.length === 0 ? (
+              <div>No past purchases</div>
+            ) : (
+              productPurchased?.map((item) => <Card {...item} key={item._id} />)
+            )}
+          </CartWrapper>
+        )}
       </ProfileWrapper>
       <PurchaseWrapper>
         <PurchaseHeader>Past Purchases</PurchaseHeader>

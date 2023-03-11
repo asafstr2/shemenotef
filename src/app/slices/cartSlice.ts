@@ -196,7 +196,6 @@ export const getTotals = (state: RootState) => {
     const { value, operator } = coupon;
     cartTotalAmount = eval(`${total} ${operator} ${value}`);
   }
-  console.log({ cartTotalAmount, total });
   cartTotalAmount = cartTotalAmount || total;
   return { cartTotalAmount, cartTotalQuantity: quantity };
 };

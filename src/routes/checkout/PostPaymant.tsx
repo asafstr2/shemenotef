@@ -1,8 +1,12 @@
 import { useEffect, useState } from "react";
 import { usePaymantSucessMutation } from "app/services/paymant";
 import { parseUrl } from "util/functions";
+import { clearCart } from "app/slices/cartSlice";
+import { useDispatch } from "react-redux";
+
 function ThankYouPage() {
   const distructeredUrl = parseUrl(window.location.href);
+  const dispatch = useDispatch();
 
   const [success, setsuccess] = useState(false);
   const [sendPaymantDataToServer, { isLoading }] = usePaymantSucessMutation();
@@ -13,6 +17,8 @@ function ThankYouPage() {
       ).unwrap();
       // @ts-ignore
       setsuccess(verify?.verify as boolean);
+      //clear cart
+      dispatch(clearCart({}));
     } catch (error) {
       console.log(error);
     }

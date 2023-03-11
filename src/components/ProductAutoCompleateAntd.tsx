@@ -67,7 +67,6 @@ export default function Search({
   useEffect(() => {
     if (debouncedSearchTerm || searchTerm.length === 0) {
       searchCharacters(debouncedSearchTerm).then((results) => {
-        console.log({ search: results });
         if (results) {
           setOptions && setOptions(results);
         } else {

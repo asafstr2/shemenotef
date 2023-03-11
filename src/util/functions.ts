@@ -111,7 +111,6 @@ export const baseQuery = retry(
     if (result.error?.status === 401) {
       retry.fail(result.error);
     }
-    console.log({ result });
     return result;
   },
   {
