@@ -90,7 +90,9 @@ const adminLanguage = {
     ruDesc: "תיאור ברוסית",
     heDesc: "תיאור בעיברית",
     currency: "מטבע",
+    quantityCurrency: "כמות ב",
     availibleForDelivery: "זמין למשלוח",
+    ingredients: "רכיבים",
   },
   [language.english]: {
     "adding a product to the database": "Adding a product to the database",
@@ -122,7 +124,9 @@ const adminLanguage = {
     ruDesc: "description in russian",
     heDesc: "description in hebrew",
     currency: "currency",
+    quantityCurrency: "quantity currency",
     availibleForDelivery: "availible for delivery",
+    ingredients: "ingredients",
   },
 };
 const categoriesLanguage = {

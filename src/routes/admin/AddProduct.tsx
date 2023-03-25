@@ -10,9 +10,7 @@ import {
   useAddProductMutation,
   useGetUploadAssetsUrlQuery,
 } from "app/services/productsApi";
-import { DesktopDatePicker } from "@mui/x-date-pickers";
-import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
-import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
+
 import DragNdrop from "components/utils/DragNDrop";
 import { uploadFiles } from "util/functions";
 import LoaderButton from "components/buttons/LoaderButton";
@@ -115,19 +113,6 @@ function AddProduct() {
                 />
               );
           })}
-          <LocalizationProvider dateAdapter={AdapterDayjs}>
-            <DesktopDatePicker
-              label="Date "
-              inputFormat="dd/MM/yyyy"
-              value={form.deliveryDate}
-              onChange={(val: any) =>
-                handleChange({ target: { name: "deliveryDate", value: val } })
-              }
-              renderInput={(params: any) => (
-                <TextField {...params} name="deliveryDate" />
-              )}
-            />
-          </LocalizationProvider>
         </div>
         <div
           id="right-coulmn"
@@ -139,78 +124,6 @@ function AddProduct() {
             width: "40%",
           }}
         >
-          <div style={{ display: "flex", gap: "10px" }}>
-            <TextField
-              name={JSON.stringify({ field: "dimensions", val: "width" })}
-              value={form.dimensions.width}
-              onChange={handleObbjectChange}
-              required
-              id={"width"}
-              label={translate("width")}
-              defaultValue={form.dimensions.width}
-            />
-            <TextField
-              name={JSON.stringify({ field: "dimensions", val: "height" })}
-              value={form.dimensions.height}
-              onChange={handleObbjectChange}
-              required
-              id={"height"}
-              label={translate("height")}
-              defaultValue={form.dimensions.height}
-            />
-          </div>
-          <div style={{ display: "flex", gap: "10px" }}>
-            <TextField
-              name={JSON.stringify({
-                field: "otherLanguageTitle",
-                val: "hebrew",
-              })}
-              value={form.otherLanguageTitle.hebrew}
-              onChange={handleObbjectChange}
-              required
-              id={"hebrew"}
-              label={translate("heTitle")}
-              defaultValue={form.otherLanguageTitle.hebrew}
-            />
-            <TextField
-              name={JSON.stringify({
-                field: "otherLanguageTitle",
-                val: "russian",
-              })}
-              value={form.otherLanguageTitle.russian}
-              onChange={handleObbjectChange}
-              required
-              id={"russian"}
-              label={translate("ruTitle")}
-              defaultValue={form.otherLanguageTitle.russian}
-            />
-          </div>
-          <div style={{ display: "flex", gap: "10px" }}>
-            <TextField
-              name={JSON.stringify({
-                field: "otherLanguageDescription",
-                val: "hebrew",
-              })}
-              value={form.otherLanguageDescription.hebrew}
-              onChange={handleObbjectChange}
-              required
-              id={"hebrew"}
-              label={translate("heDesc")}
-              defaultValue={form.otherLanguageDescription.hebrew}
-            />
-            <TextField
-              name={JSON.stringify({
-                field: "otherLanguageDescription",
-                val: "russian",
-              })}
-              value={form.otherLanguageDescription.russian}
-              onChange={handleObbjectChange}
-              required
-              id={"russian"}
-              label={translate("ruDesc")}
-              defaultValue={form.otherLanguageDescription.russian}
-            />
-          </div>
           <div style={{ display: "flex", gap: "10px" }}>
             <TextField
               name={JSON.stringify({ field: "price", val: "value" })}
@@ -231,6 +144,32 @@ function AddProduct() {
               helperText="Please select your currency"
             >
               {currencies.map((option) => (
+                <MenuItem key={option.value} value={option.label}>
+                  {option.label}
+                </MenuItem>
+              ))}
+            </TextField>
+          </div>
+          <div style={{ display: "flex", gap: "10px" }}>
+            <TextField
+              name={JSON.stringify({ field: "quantitty", val: "value" })}
+              value={form.quantitty.value}
+              onChange={handleObbjectChange}
+              required
+              id={"quantitty.value"}
+              label={translate("value")}
+              defaultValue={form.quantitty.value}
+            />
+            <TextField
+              id="quantitty.currency"
+              name={JSON.stringify({ field: "quantitty", val: "currency" })}
+              select
+              label={translate("quantityCurrency")}
+              value={form.quantitty.currency}
+              onChange={handleObbjectChange}
+              helperText="Please select your mesuer"
+            >
+              {quantityCurrency.map((option) => (
                 <MenuItem key={option.value} value={option.label}>
                   {option.label}
                 </MenuItem>
@@ -288,24 +227,28 @@ const currencies = [
     label: "₪",
   },
 ];
+const quantityCurrency = [
+  {
+    value: "GRAM",
+    label: "g",
+  },
+  {
+    value: "MIL",
+    label: "ml",
+  },
+];
+
 const fields = {
   title: "test3",
   description: "some thing",
-  quantity: "1",
+  ingredients: "רכיבים",
   images: [],
   quantetyInStock: "2",
-  size: "2",
   category: "pics",
-  brand: "shemen-otef",
-  location: "home",
-  discount: "12",
   featured: true,
   outOfStock: false,
   listed: true,
   availibleForDelivery: true,
-  otherLanguageDescription: { hebrew: "בדיקה", russian: "בדיקה" },
-  otherLanguageTitle: { hebrew: "בדיקה", russian: "בדיקה" },
-  dimensions: { width: "12", height: "12" },
   price: { value: "14", currency: "₪" },
-  deliveryDate: new Date(),
+  quantitty: { value: "14", currency: "g" },
 };
