@@ -6,26 +6,17 @@ import {
   Title,
   Subtitle,
   CardContainer,
-  Card,
-  Image,
-  Button,
   CarusaleContainer,
 } from "./homepage.style";
 import Carusale from "components/utils/Carusale";
-import { addToCart } from "app/slices/cartSlice";
-import { useDispatch } from "react-redux";
-import NavLink from "components/utils/Link";
-import { useLocation, useParams } from "react-router-dom";
-import Loader from "components/utils/Loader";
 
+import Loader from "components/utils/Loader";
+import Card from "components/cards/CardForHomePage";
 interface Props {
   productLoading: boolean;
   products: Products[];
 }
 function Homepage({ productLoading, products }: Props) {
-  const dispatch = useDispatch();
-  let location = useLocation();
-
   if (productLoading) return <Loader />;
   return (
     <Container>
@@ -36,21 +27,7 @@ function Homepage({ productLoading, products }: Props) {
       </CarusaleContainer>
       <CardContainer>
         {products?.map((product: Products) => (
-          <Card key={product._id}>
-            <NavLink
-              to={`/modal/product/${product._id}`}
-              state={{ props: product, modalLocation: location }}
-            >
-              <>
-                <Image src={product.image} alt={product.title} />
-                <h3>{product.title}</h3>
-                <p>{product.price.value}</p>
-                <Button onClick={() => dispatch(addToCart(product))}>
-                  Add to cart
-                </Button>
-              </>
-            </NavLink>
-          </Card>
+          <Card product={product} />
         ))}
       </CardContainer>
     </Container>
