@@ -109,17 +109,8 @@ export default function Search({
         notFoundContent="no results"
       >
         {options?.map((product) => (
-          <Option
-            key={product._id}
-            value={
-              lang === language.hebrew
-                ? product.otherLanguageTitle.hebrew
-                : product.title
-            }
-          >
-            {lang === language.hebrew
-              ? product.otherLanguageTitle.hebrew
-              : product.title}
+          <Option key={product._id} value={product.title}>
+            {product.title}
           </Option>
         ))}
       </SearchInput>
