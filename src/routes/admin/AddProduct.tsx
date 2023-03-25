@@ -152,20 +152,20 @@ function AddProduct() {
           </div>
           <div style={{ display: "flex", gap: "10px" }}>
             <TextField
-              name={JSON.stringify({ field: "quantitty", val: "value" })}
-              value={form.quantitty.value}
+              name={JSON.stringify({ field: "quantity", val: "value" })}
+              value={form.quantity.value}
               onChange={handleObbjectChange}
               required
-              id={"quantitty.value"}
+              id={"quantity.value"}
               label={translate("value")}
-              defaultValue={form.quantitty.value}
+              defaultValue={form.quantity.value}
             />
             <TextField
-              id="quantitty.currency"
-              name={JSON.stringify({ field: "quantitty", val: "currency" })}
+              id="quantity.currency"
+              name={JSON.stringify({ field: "quantity", val: "currency" })}
               select
               label={translate("quantityCurrency")}
-              value={form.quantitty.currency}
+              value={form.quantity.currency}
               onChange={handleObbjectChange}
               helperText="Please select your mesuer"
             >
@@ -250,5 +250,5 @@ const fields = {
   listed: true,
   availibleForDelivery: true,
   price: { value: "14", currency: "₪" },
-  quantitty: { value: "14", currency: "g" },
+  quantity: { value: "14", currency: "g" },
 };
