@@ -72,6 +72,7 @@ function Carusale({ products, productLoading }: Props) {
                   height="260px"
                   src={product.image}
                   alt={product.title}
+                  style={{ objectFit: "contain" }}
                 />
               ) : (
                 <img
@@ -79,6 +80,7 @@ function Carusale({ products, productLoading }: Props) {
                   width="100%"
                   src={product.image}
                   alt={product.title}
+                  style={{ objectFit: "contain" }}
                 />
               )}
             </div>
