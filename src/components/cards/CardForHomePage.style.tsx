@@ -24,6 +24,20 @@ export const FloatingDiv = styled.div`
     cursor: pointer;
   }
 `;
+export const FloatingQuantityDiv = styled.div`
+  width: fit-content;
+  padding: 2px;
+  text-align: center;
+  left: 3%;
+  top: 3%;
+  position: absolute;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #00adb5;
+  font-size: 0.7em;
+`;
+
 type ImageProps = {
   src: string;
   alt: string;

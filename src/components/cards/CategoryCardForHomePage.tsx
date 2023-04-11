@@ -5,6 +5,7 @@ import {
   CardFooter,
   FloatingDiv,
   Title,
+  FloatingQuantityDiv,
 } from "./CardForHomePage.style";
 
 import NavLink from "components/utils/Link";
@@ -19,6 +20,7 @@ function CardForHomePage({ category }: { category: Category }) {
             <Title>{category.title}</Title>
           </CardFooter>
           <FloatingDiv>לצפיה מהירה</FloatingDiv>
+          <FloatingQuantityDiv>{`${category.products.length} מוצרים`}</FloatingQuantityDiv>
         </>
       </NavLink>
     </Card>
