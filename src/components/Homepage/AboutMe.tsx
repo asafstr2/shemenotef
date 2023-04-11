@@ -5,7 +5,8 @@ import { Grid } from "@mui/material";
 import { styled } from "@mui/material/styles";
 
 const StyledSection = styled("section")(({ theme }) => ({
-  backgroundColor: theme.palette.secondary.main,
+  backgroundColor: theme.palette.secondary.light,
+  paddingBlockEnd: theme.spacing(20),
 }));
 
 const StyledContainer = styled("div")(({ theme }) => ({
@@ -13,6 +14,18 @@ const StyledContainer = styled("div")(({ theme }) => ({
   paddingBlockStart: theme.spacing(8),
   [theme.breakpoints.down("sm")]: {
     paddingInline: theme.spacing(3),
+  },
+}));
+
+const Logo = styled("div")(({ theme }) => ({
+  width: "150px",
+  borderRadius: "15px",
+  margin: "auto",
+  "& img": {
+    borderRadius: "15px",
+    width: "100%",
+    height: "100%",
+    objectFit: "contain",
   },
 }));
 
@@ -36,7 +49,7 @@ const StyledDivider = styled("hr")(({ theme }) => ({
 }));
 
 const StyledContent = styled("p")(({ theme }) => ({
-  margin: "20px auto",
+  margin: "20px auto 80px auto",
   textAlign: "center",
   fontFamily: "Assistant', sans-serif",
   [theme.breakpoints.up("sm")]: {
@@ -51,8 +64,6 @@ const AboutSection = () => {
   return (
     <StyledSection>
       <StyledContainer>
-        {/* <Fade up> */}
-        {/* <Grid container justify="center"> */}
         <Grid item xs={12} sm={8} md={6}>
           <StyledTitle>אודות</StyledTitle>
           <StyledDivider />
@@ -91,9 +102,13 @@ const AboutSection = () => {
             <br />
             אוהבת, תמרה.
           </StyledContent>
+          <Logo>
+            <img
+              src="https://static1.s123-cdn-static-a.com/uploads/7229067/400_642c249798e17.jpg"
+              alt="profile"
+            />
+          </Logo>
         </Grid>
-        {/* </Grid> */}
-        {/* </Fade> */}
       </StyledContainer>
     </StyledSection>
   );

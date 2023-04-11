@@ -10,7 +10,6 @@ import Badge from "@mui/material/Badge";
 import MenuItem from "@mui/material/MenuItem";
 import Menu from "@mui/material/Menu";
 import SearchIcon from "@mui/icons-material/Search";
-import NotificationsIcon from "@mui/icons-material/Notifications";
 import MoreIcon from "@mui/icons-material/MoreVert";
 import { Products } from "app/types/core";
 import { Language } from "util/const";
@@ -23,6 +22,14 @@ import AvatarLogin from "./AvatarLogin";
 import { useMediaQuery } from "@mui/material";
 import NavLink from "components/utils/Link";
 
+const StyledAppBar = styled(AppBar)(({ theme }) => ({
+  // animate the header height transition on scroll
+  // transition: "height 0.3s ease-in-out",
+  // "&.shrink": {
+  //   height: 60,
+  //   padding: theme.spacing(0.5, 0),
+  // },
+}));
 const Search = styled("div")(({ theme }) => ({
   position: "relative",
   borderRadius: theme.shape.borderRadius,
@@ -72,7 +79,11 @@ interface Props {
 
 const Logo = styled("div")(({ theme }) => ({
   margin: 0,
-  width: 35,
+  width: "50px",
+  transition: "width 0.2s ease-in-out",
+  "&.shrink": {
+    width: "30px",
+  },
   "& img": {
     width: "100%",
     height: "100%",
@@ -123,6 +134,19 @@ export default function PrimarySearchAppBar(props: Props) {
   const menuId = "primary-search-account-menu";
 
   const mobileMenuId = "primary-search-account-menu-mobile";
+  const [shrink, setShrink] = React.useState(false);
+
+  React.useEffect(() => {
+    const handleScroll = () => {
+      if (window.scrollY > 0) {
+        setShrink(true);
+      } else {
+        setShrink(false);
+      }
+    };
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
   const renderMobileMenu = (
     <Menu
       anchorEl={mobileMoreAnchorEl}
@@ -172,87 +196,77 @@ export default function PrimarySearchAppBar(props: Props) {
   );
 
   return (
-    <Box sx={{ flexGrow: 1 }}>
-      <AppBar position="static">
-        <Toolbar>
-          {/* space icon */}
+    <StyledAppBar className={shrink ? "shrink" : ""} position="sticky">
+      <Toolbar>
+        <NavLink to="/">
+          <Typography
+            variant="h6"
+            noWrap
+            component="div"
+            sx={{ display: { xs: "none", sm: "block" } }}
+          >
+            <Logo className={shrink ? "shrink" : ""}>
+              <img
+                alt="Shemen otef"
+                src="https://static1.s123-cdn-static-a.com/uploads/7229067/400_642b1b8106cce.png"
+              ></img>
+            </Logo>
+          </Typography>
+        </NavLink>
+        <Search>
+          <SearchIconWrapper>
+            <SearchIcon />
+          </SearchIconWrapper>
+          <StyledInputBase
+            placeholder="Search…"
+            inputProps={{ "aria-label": "search" }}
+          />
+        </Search>
+        <Box sx={{ flexGrow: 1 }} />
+        <Box sx={{ display: { xs: "none", md: "flex" } }}>
           <IconButton
             size="large"
-            edge="start"
+            aria-label="show 4 new mails"
             color="inherit"
-            aria-label="open drawer"
-            sx={{ mr: 2 }}
-          ></IconButton>
-          <NavLink to="/">
-            <Typography
-              variant="h6"
-              noWrap
-              component="div"
-              sx={{ display: { xs: "none", sm: "block" } }}
+          >
+            <Popover
+              content={cartPopoverContent}
+              trigger="click"
+              open={cartVisible}
+              onOpenChange={handleCartVisibleChange}
+              placement="bottomRight"
             >
-              <Logo>
-                <img
-                  alt="Shemen otef"
-                  src="https://static1.s123-cdn-static-a.com/uploads/7229067/400_642b1b8106cce.png"
-                ></img>
-              </Logo>
-            </Typography>
-          </NavLink>
-          <Search>
-            <SearchIconWrapper>
-              <SearchIcon />
-            </SearchIconWrapper>
-            <StyledInputBase
-              placeholder="Search…"
-              inputProps={{ "aria-label": "search" }}
-            />
-          </Search>
-          <Box sx={{ flexGrow: 1 }} />
-          <Box sx={{ display: { xs: "none", md: "flex" } }}>
-            <IconButton
-              size="large"
-              aria-label="show 4 new mails"
-              color="inherit"
-            >
-              <Popover
-                content={cartPopoverContent}
-                trigger="click"
-                open={cartVisible}
-                onOpenChange={handleCartVisibleChange}
-                placement="bottomRight"
-              >
-                <Badge badgeContent={cartTotalQuantity} color="info">
-                  <ShoppingCartOutlined />
-                </Badge>
-              </Popover>
-            </IconButton>
+              <Badge badgeContent={cartTotalQuantity} color="info">
+                <ShoppingCartOutlined />
+              </Badge>
+            </Popover>
+          </IconButton>
 
-            <IconButton
-              size="large"
-              edge="end"
-              aria-label="account of current user"
-              aria-controls={menuId}
-              aria-haspopup="true"
-              color="inherit"
-            >
-              <AvatarLogin />
-            </IconButton>
-          </Box>
-          <Box sx={{ display: { xs: "flex", md: "none" } }}>
-            <IconButton
-              size="large"
-              aria-label="show more"
-              aria-controls={mobileMenuId}
-              aria-haspopup="true"
-              onClick={handleMobileMenuOpen}
-              color="inherit"
-            >
-              <MoreIcon />
-            </IconButton>
-          </Box>
-        </Toolbar>
-      </AppBar>
+          <IconButton
+            size="large"
+            edge="end"
+            aria-label="account of current user"
+            aria-controls={menuId}
+            aria-haspopup="true"
+            color="inherit"
+          >
+            <AvatarLogin />
+          </IconButton>
+        </Box>
+        <Box sx={{ display: { xs: "flex", md: "none" } }}>
+          <IconButton
+            size="large"
+            aria-label="show more"
+            aria-controls={mobileMenuId}
+            aria-haspopup="true"
+            onClick={handleMobileMenuOpen}
+            color="inherit"
+          >
+            <MoreIcon />
+          </IconButton>
+        </Box>
+      </Toolbar>
       {isMobile && renderMobileMenu}
-    </Box>
+    </StyledAppBar>
   );
 }
