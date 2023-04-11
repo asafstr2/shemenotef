@@ -22,14 +22,7 @@ import AvatarLogin from "./AvatarLogin";
 import { useMediaQuery } from "@mui/material";
 import NavLink from "components/utils/Link";
 
-const StyledAppBar = styled(AppBar)(({ theme }) => ({
-  // animate the header height transition on scroll
-  // transition: "height 0.3s ease-in-out",
-  // "&.shrink": {
-  //   height: 60,
-  //   padding: theme.spacing(0.5, 0),
-  // },
-}));
+const StyledAppBar = styled(AppBar)(({ theme }) => ({}));
 const Search = styled("div")(({ theme }) => ({
   position: "relative",
   borderRadius: theme.shape.borderRadius,
@@ -80,6 +73,7 @@ interface Props {
 const Logo = styled("div")(({ theme }) => ({
   margin: 0,
   width: "50px",
+  marginBlockStart: "15%",
   transition: "width 0.2s ease-in-out",
   "&.shrink": {
     width: "30px",
@@ -88,6 +82,9 @@ const Logo = styled("div")(({ theme }) => ({
     width: "100%",
     height: "100%",
     objectFit: "contain",
+  },
+  "@media only screen and (max-width: 600px)": {
+    width: "30px",
   },
 }));
 const CartPopoverContent = styled("div")({
@@ -199,12 +196,7 @@ export default function PrimarySearchAppBar(props: Props) {
     <StyledAppBar className={shrink ? "shrink" : ""} position="sticky">
       <Toolbar>
         <NavLink to="/">
-          <Typography
-            variant="h6"
-            noWrap
-            component="div"
-            sx={{ display: { xs: "none", sm: "block" } }}
-          >
+          <Typography variant="h6" noWrap component="div">
             <Logo className={shrink ? "shrink" : ""}>
               <img
                 alt="Shemen otef"

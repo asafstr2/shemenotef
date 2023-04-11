@@ -181,7 +181,7 @@ export interface Category {
   };
   image: string;
   images: [];
-  Products: Products[];
+  products: Products[];
 }
 
 

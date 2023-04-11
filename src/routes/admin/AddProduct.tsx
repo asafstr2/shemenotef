@@ -10,10 +10,12 @@ import {
   useAddProductMutation,
   useGetUploadAssetsUrlQuery,
 } from "app/services/productsApi";
-
+import { useGetAllcategoriesQuery } from "app/services/categoriesApi";
 import DragNdrop from "components/utils/DragNDrop";
 import { uploadFiles } from "util/functions";
 import LoaderButton from "components/buttons/LoaderButton";
+import { Category } from "app/types/core";
+import Select from "@mui/material/Select";
 function AddProduct() {
   const [updateProuduct, { isLoading }] = useAddProductMutation();
   const [form, setForm] = useState(fields);
@@ -31,6 +33,16 @@ function AddProduct() {
       }
     );
 
+  const { data: categories, isLoading: categoriesLoading } =
+    useGetAllcategoriesQuery({}) as {
+      data: Category[];
+      isLoading: boolean;
+      refetch: () => void;
+    };
+  const categoriesNames = categories?.map((category) => ({
+    id: category._id,
+    title: category.title,
+  }));
   const handleSubmit = async () => {
     setIsUploading(true);
     //@ts-ignore
@@ -50,13 +62,15 @@ function AddProduct() {
       },
     }));
   };
+
   const handleChange = (event: any) => {
+    console.log({ event });
     setForm((prev) => ({ ...prev, [event.target.name]: event.target.value }));
   };
   const handleCheckboxChange = (event: any) => {
     setForm((prev) => ({ ...prev, [event.target.name]: event.target.checked }));
   };
-  isLoading && <h1>lodaing</h1>;
+  isLoading || (categoriesLoading && <h1>lodaing</h1>);
   return (
     <div
       style={{
@@ -97,7 +111,7 @@ function AddProduct() {
         >
           {Object.keys(form).map((key) => {
             //@ts-ignore
-            if (typeof form[key] === "string")
+            if (typeof form[key] === "string" && key !== "categoryid")
               return (
                 <TextField
                   key={key}
@@ -176,6 +190,22 @@ function AddProduct() {
               ))}
             </TextField>
           </div>
+          <div>
+            <TextField
+              value={form.categoryid}
+              onChange={handleChange}
+              label="Category"
+              name="categoryid"
+              select
+              sx={{ width: 200 }}
+            >
+              {categoriesNames?.map((category) => (
+                <MenuItem key={category.id} value={category.id}>
+                  {category.title}
+                </MenuItem>
+              ))}
+            </TextField>
+          </div>
           <FormGroup>
             {Object.keys(form).map((key) => {
               //@ts-ignore
@@ -244,11 +274,11 @@ const fields = {
   ingredients: "רכיבים",
   images: [],
   quantetyInStock: "2",
-  category: "pics",
   featured: true,
   outOfStock: false,
   listed: true,
   availibleForDelivery: true,
   price: { value: "14", currency: "₪" },
   quantity: { value: "14", currency: "g" },
+  categoryid: "",
 };

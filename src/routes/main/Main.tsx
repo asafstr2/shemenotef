@@ -80,7 +80,16 @@ function Main() {
         <ProfileRoute />
         <ModalRoutes />
         <Routes location={modalLocation || location}>
-          {/* <Route path="/categories" element={<CategoriesMain />} /> */}
+          <Route
+            path="/"
+            element={
+              <Homepage
+                products={(options && options.length && options) || products}
+                productLoading={productLoading || CategoriesLoading}
+                categories={categoriesData as Category[]}
+              />
+            }
+          />
           <Route
             path="/autocomplete"
             element={
@@ -91,7 +100,7 @@ function Main() {
               />
             }
           />
-          <Route path="/categories" element={<CategoriesMain />} />
+          <Route path="/categories/:categoryid" element={<CategoriesMain />} />
           <Route path="/cart" element={<Cart />} />
           <Route
             path="/checkout"
@@ -128,17 +137,6 @@ function Main() {
           <Route
             path="/product/:productId/qr"
             element={<ProductPageRedirect />}
-          />
-
-          <Route
-            path="/"
-            element={
-              <Homepage
-                products={(options && options.length && options) || products}
-                productLoading={productLoading || CategoriesLoading}
-                categories={categoriesData as Category[]}
-              />
-            }
           />
         </Routes>
       </MainWrapper>
