@@ -9,7 +9,7 @@ import Card from "components/cards/ProductCardForHomePage";
 import CategoryCard from "components/cards/CategoryCardForHomePage";
 
 //@ts-ignore
-import Fade from "react-reveal/Fade";
+// import Fade from "react-reveal/Fade";
 import { styled } from "@mui/material/styles";
 
 const StyledDivider = styled("hr")(({ theme }) => ({
@@ -51,26 +51,26 @@ function Homepage({ productLoading, products, categories }: Props) {
   return (
     <Container>
       <Carusale scrollToCardContainer={scrollToCardContainer} />
-      <Fade bottom cascade>
-        <AboutMe />
-      </Fade>
+      {/* <Fade bottom cascade> */}
+      <AboutMe />
+      {/* </Fade> */}
       <div ref={CardContainerRef}> </div>
-      <Fade bottom cascade>
-        <StyledTitle>מוצרים מומלצים</StyledTitle>
-        <StyledDivider />
-        <CardContainer>
-          {adminPrefferedProducts?.map((product: Products) => (
-            <Card product={product} key={product._id} />
-          ))}
-        </CardContainer>
-        <StyledTitle> קטגוריות</StyledTitle>
-        <StyledDivider />
-        <CardContainer>
-          {categories?.map((category: Category) => (
-            <CategoryCard category={category} key={category._id} />
-          ))}
-        </CardContainer>
-      </Fade>
+      {/* <Fade bottom cascade> */}
+      <StyledTitle>מוצרים מומלצים</StyledTitle>
+      <StyledDivider />
+      <CardContainer>
+        {adminPrefferedProducts?.map((product: Products) => (
+          <Card product={product} key={product._id} />
+        ))}
+      </CardContainer>
+      <StyledTitle> קטגוריות</StyledTitle>
+      <StyledDivider />
+      <CardContainer>
+        {categories?.map((category: Category) => (
+          <CategoryCard category={category} key={category._id} />
+        ))}
+      </CardContainer>
+      {/* </Fade> */}
     </Container>
   );
 }
