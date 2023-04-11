@@ -1,7 +1,6 @@
 import React from "react";
 import { Grid } from "@mui/material";
 
-// import { Fade } from "react-reveal";
 import { styled } from "@mui/material/styles";
 
 const StyledSection = styled("section")(({ theme }) => ({
@@ -45,7 +44,7 @@ const StyledDivider = styled("hr")(({ theme }) => ({
   width: "10%",
   height: "3px",
   margin: "20px auto",
-  backgroundColor: theme.palette.secondary.light,
+  backgroundColor: theme.palette.primary.light,
 }));
 
 const StyledContent = styled("p")(({ theme }) => ({

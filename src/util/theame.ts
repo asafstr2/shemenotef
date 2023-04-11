@@ -4,7 +4,7 @@ import { purple, red, blue } from "@mui/material/colors";
 export const masterTheme = createTheme({
   palette: {
     primary: {
-      light: "#757ce8",
+      light: "#00adb5",
       main: "#333",
       dark: "rgb(33, 33, 33)",
       contrastText: "#fff",

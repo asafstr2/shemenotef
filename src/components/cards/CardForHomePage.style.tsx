@@ -1,42 +1,7 @@
 import styled from "styled-components";
 
+import { styled as mui, Theme } from "@mui/material/styles";
 
-
-export const Image = styled.img`
-  width: 100%;
-  height: 350px;
-  object-fit: cover;
-  flex: 3;
-  transition: all 0.3s ease;
-  &:hover {
-    opacity: 0.8;
-  }
-`;
-
-export const Button = styled.button`
-  background-color: #00adb5;
-  border: none;
-  color: white;
-  padding: 0.75rem 1.5rem;
-  text-align: center;
-  text-decoration: none;
-  display: inline-block;
-  font-size: 1rem;
-  margin-top: 1rem;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
-  &:hover {
-    opacity: 0.8;
-  }
-`;
-
-export const CardFooter = styled.div`
-  width: 100%;
-  flex: 1;
-  display: flex;
-  align-items: center;
-  justify-content: space-around;
-`;
 export const FloatingDiv = styled.div`
   width: 143px;
   height: 35px;
@@ -59,40 +24,77 @@ export const FloatingDiv = styled.div`
     cursor: pointer;
   }
 `;
-export const Card = styled.div`
-  width: 25%;
-  margin: 2rem;
-  border-radius: 15px;
-  text-align: center;
-  box-shadow: 0 0.3125rem 0.875rem 0 rgba(129, 129, 129, 0.2);
-  display: flex;
-  flex-direction: column;
-  overflow: hidden;
-  @media only screen and (max-width: 768px) {
-    width: 100%;
-  }
-  position: relative;
 
-  &:hover {
-    ${FloatingDiv} {
-      visibility: visible;
-      top: 60%;
-    }
-  }
-  &:not(:hover) {
-    ${FloatingDiv} {
-      visibility: hidden;
-    }
-  }
-`;
+export const Image = mui("img")({
+  width: "100%",
+  height: "350px",
+  objectFit: "cover",
+  flex: 3,
+  transition: "all 0.3s ease",
+  "&:hover": {
+    opacity: 0.8,
+  },
+});
 
-export const Title = styled.h3`
-  text-decoration: none;
-  border: none;
-`;
-export const Price = styled.p`
-  text-decoration: none;
-  border: none;
-  color: #00adb5;
-  font-weight: bold;
-`;
+export const Button = mui("button")(({ theme }: { theme: Theme }) => ({
+  backgroundColor: theme.palette.primary.light,
+  border: "none",
+  color: "white",
+  padding: "0.75rem 1.5rem",
+  textAlign: "center",
+  textDecoration: "none",
+  display: "inline-block",
+  fontSize: "1rem",
+  marginTop: "1rem",
+  cursor: "pointer",
+  transition: "background-color 0.3s ease",
+  "&:hover": {
+    opacity: 0.8,
+  },
+}));
+
+export const CardFooter = mui("div")({
+  width: "100%",
+  flex: 1,
+  display: "flex",
+  alignItems: "center",
+  justifyContent: "space-around",
+});
+
+export const Card = mui("div")(({ theme }: { theme: Theme }) => ({
+  // width: "25%",
+  margin: "2rem",
+  borderRadius: "15px",
+  textAlign: "center",
+  boxShadow: "0 0.3125rem 0.875rem 0 rgba(129, 129, 129, 0.2)",
+  display: "flex",
+  flexDirection: "column",
+  overflow: "hidden",
+  [theme.breakpoints.down("sm")]: {
+    width: "100%",
+  },
+  position: "relative",
+  "&:hover": {
+    [`${FloatingDiv}`]: {
+      visibility: "visible",
+      top: "60%",
+    },
+  },
+  "&:not(:hover)": {
+    [`${FloatingDiv}`]: {
+      visibility: "hidden",
+    },
+  },
+}));
+
+export const Title = mui("h3")({
+  textDecoration: "none",
+  border: "none",
+});
+
+export const Price = mui("p")({
+  textDecoration: "none",
+  border: "none",
+  color: "#00adb5",
+  fontWeight: "bold",
+});
