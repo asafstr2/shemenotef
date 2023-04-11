@@ -7,9 +7,7 @@ interface Props {
 }
 export default function PrivateRoute({ children, onLogingGoto }: Props) {
   const user = useSelector((state: RootState) => state.user.currentUser);
-  const isLoggedin = useSelector(
-    (state: RootState) => state.user.authentiicate
-  );
+  const isLoggedin = useSelector((state: RootState) => state.user.authenticate);
   let location = useLocation();
   return user && isLoggedin ? (
     children

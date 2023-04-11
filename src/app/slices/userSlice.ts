@@ -3,7 +3,7 @@ import { toast } from "react-toastify";
 import { userLcSet, jwtLcSet, jwtLcGet } from "util/functions";
 import jwtDecode from "jwt-decode";
 const initialState = {
-  authentiicate: false,
+  authenticate: false,
   currentUser: {
     _id: "",
     birthday: "",
@@ -28,7 +28,7 @@ const userSlice = createSlice({
 
       const success = {
         ...state,
-        authentiicate: true,
+        authenticate: true,
         currentUser: user,
       };
       if (!jwtLcGet()) {
@@ -43,7 +43,7 @@ const userSlice = createSlice({
       const user = jwtDecode(action.payload) ?? initialState.currentUser;
       const success = {
         ...state,
-        authentiicate: true,
+        authenticate: true,
         currentUser: { ...user, firstTimeUser: true },
       };
       if (!jwtLcGet()) {

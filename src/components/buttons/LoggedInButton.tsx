@@ -31,7 +31,7 @@ function LoggedInButton({
   ...props
 }: Props) {
   const isUserLoggedIn = useSelector(
-    (state: RootState) => state.user.authentiicate
+    (state: RootState) => state.user.authenticate
   );
   const navigate = useNavigate();
   const style = {

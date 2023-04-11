@@ -8,9 +8,7 @@ interface Props {
 }
 export default function PrivateRoute({ children }: Props) {
   const user = useSelector((state: RootState) => state.user.currentUser);
-  const isLoggedin = useSelector(
-    (state: RootState) => state.user.authentiicate
-  );
+  const isLoggedin = useSelector((state: RootState) => state.user.authenticate);
   const admin = user?.roles?.includes("admin");
   const isAdmin = user && isLoggedin && admin;
   useEffect(() => {

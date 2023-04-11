@@ -12,9 +12,9 @@ function CustomLink({ children, to, ...props }: Props) {
   return (
     <Link
       style={{
-        textDecoration: "none",
-        opacity: match ? "0.8" : "",
-        borderBottom: match ? "1px solid red" : "",
+        textDecoration: "bold",
+        opacity: match ? "0.6" : "",
+        color: "inherit",
       }}
       to={to}
       {...props}

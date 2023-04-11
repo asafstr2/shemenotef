@@ -19,6 +19,7 @@ import { RootState } from "app/store";
 import { Products } from "app/types/core";
 import { MainWrapper } from "./Main.style";
 import ProductPageRedirect from "components/product/ProductPageRedirect";
+
 function Main() {
   let location = useLocation();
   let modalLocation = location?.state?.modalLocation;
@@ -54,6 +55,7 @@ function Main() {
   useEffect(() => {
     refetch();
   }, [lang, refetch]);
+  console.log({ options, products });
   return (
     <div>
       <Header options={options} setOptions={setOptions} lang={lang} />
@@ -104,7 +106,7 @@ function Main() {
             path="/"
             element={
               <Homepage
-                products={options || products}
+                products={(options && options.length && options) || products}
                 productLoading={productLoading}
               />
             }

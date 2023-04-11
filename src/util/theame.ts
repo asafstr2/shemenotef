@@ -5,13 +5,13 @@ export const masterTheme = createTheme({
   palette: {
     primary: {
       light: "#757ce8",
-      main: blue[100],
+      main: "#333",
       dark: "rgb(33, 33, 33)",
-      contrastText: "#000",
+      contrastText: "#fff",
     },
     secondary: {
-      light: "#ff7961",
-      main: "#f44336",
+      light: "#00adb5",
+      main: "#f5f5f5",
       dark: "#ba000d",
       contrastText: "#000",
     },
