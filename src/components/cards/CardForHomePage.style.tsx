@@ -24,34 +24,43 @@ export const FloatingDiv = styled.div`
     cursor: pointer;
   }
 `;
+type ImageProps = {
+  src: string;
+  alt: string;
+  category?: boolean; // add category prop here
+};
+export const Image = mui("img")<ImageProps>(
+  ({ theme, category }: { theme: Theme; category?: boolean }) => ({
+    width: "100%",
+    height: "350px",
+    objectFit: "cover",
+    flex: 3,
+    transition: "all 0.3s ease",
+    "&:hover": {
+      opacity: 0.8,
+      scale: category ? "1.05" : "",
+    },
+  })
+);
 
-export const Image = mui("img")({
-  width: "100%",
-  height: "350px",
-  objectFit: "cover",
-  flex: 3,
-  transition: "all 0.3s ease",
-  "&:hover": {
-    opacity: 0.8,
-  },
-});
-
-export const Button = mui("button")(({ theme }: { theme: Theme }) => ({
-  backgroundColor: theme.palette.primary.light,
-  border: "none",
-  color: "white",
-  padding: "0.75rem 1.5rem",
-  textAlign: "center",
-  textDecoration: "none",
-  display: "inline-block",
-  fontSize: "1rem",
-  marginTop: "1rem",
-  cursor: "pointer",
-  transition: "background-color 0.3s ease",
-  "&:hover": {
-    opacity: 0.8,
-  },
-}));
+export const Button = mui("button")(
+  ({ theme, category }: { theme: Theme; category?: boolean }) => ({
+    backgroundColor: theme.palette.primary.light,
+    border: "none",
+    color: "white",
+    padding: "0.75rem 1.5rem",
+    textAlign: "center",
+    textDecoration: "none",
+    display: "inline-block",
+    fontSize: "1rem",
+    marginTop: "1rem",
+    cursor: "pointer",
+    transition: "background-color 0.3s ease",
+    "&:hover": {
+      opacity: 0.8,
+    },
+  })
+);
 
 export const CardFooter = mui("div")({
   width: "100%",

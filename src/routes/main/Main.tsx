@@ -5,6 +5,7 @@ import Checkout from "routes/checkout/Checkout";
 import PostPaymant from "routes/checkout/PostPaymant";
 import AddProduct from "routes/admin/AddProduct";
 import Homepage from "components/Homepage/Homepage";
+import CategoriesMain from "components/categories/Categories";
 import Footer from "components/footer/footer";
 import Header from "components/navbar/Header";
 import ProductAutoCompleate from "components/ProductAutoCompleateAntd";
@@ -14,15 +15,31 @@ import PrivateRoute from "routes/PrivateRouteWrapper";
 import AdminRoute from "routes/admin/AdminRoute";
 import ProfileRoute from "routes/profileRoutes/ProfileMain";
 import { useGetAllProductsQuery } from "app/services/productsApi";
+import { useGetAllcategoriesQuery } from "app/services/categoriesApi";
 import { useSelector } from "react-redux";
 import { RootState } from "app/store";
-import { Products } from "app/types/core";
+import { Category, Products } from "app/types/core";
 import { MainWrapper } from "./Main.style";
 import ProductPageRedirect from "components/product/ProductPageRedirect";
+import AddCategory from "routes/admin/AddCategory";
 
 function Main() {
   let location = useLocation();
   let modalLocation = location?.state?.modalLocation;
+  const {
+    data: categoriesData,
+    isLoading: CategoriesLoading,
+    refetch: categoriesRefetch,
+  } = useGetAllcategoriesQuery(
+    {},
+    {
+      refetchOnMountOrArgChange: true,
+      pollingInterval: 36000,
+      refetchOnReconnect: true,
+      refetchOnFocus: false,
+    }
+  );
+  console.log({ categoriesData });
   const {
     data,
     isLoading: productLoading,
@@ -54,8 +71,8 @@ function Main() {
   const lang = useSelector((state: RootState) => state.lang.lang);
   useEffect(() => {
     refetch();
-  }, [lang, refetch]);
-  console.log({ options, products });
+    categoriesRefetch();
+  }, [categoriesRefetch, lang, refetch]);
   return (
     <div>
       <Header options={options} setOptions={setOptions} lang={lang} />
@@ -63,6 +80,7 @@ function Main() {
         <ProfileRoute />
         <ModalRoutes />
         <Routes location={modalLocation || location}>
+          {/* <Route path="/categories" element={<CategoriesMain />} /> */}
           <Route
             path="/autocomplete"
             element={
@@ -73,6 +91,7 @@ function Main() {
               />
             }
           />
+          <Route path="/categories" element={<CategoriesMain />} />
           <Route path="/cart" element={<Cart />} />
           <Route
             path="/checkout"
@@ -99,15 +118,25 @@ function Main() {
             }
           />
           <Route
-            path="product/:productId/qr"
+            path="/admin/addCategory"
+            element={
+              <AdminRoute>
+                <AddCategory />
+              </AdminRoute>
+            }
+          />
+          <Route
+            path="/product/:productId/qr"
             element={<ProductPageRedirect />}
           />
+
           <Route
             path="/"
             element={
               <Homepage
                 products={(options && options.length && options) || products}
-                productLoading={productLoading}
+                productLoading={productLoading || CategoriesLoading}
+                categories={categoriesData as Category[]}
               />
             }
           />

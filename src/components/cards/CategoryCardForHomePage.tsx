@@ -1,4 +1,4 @@
-import { Products } from "app/types/core";
+import { Category, Products } from "app/types/core";
 import {
   Card,
   Image,
@@ -14,27 +14,24 @@ import { useDispatch } from "react-redux";
 import NavLink from "components/utils/Link";
 import { useLocation } from "react-router-dom";
 import { translate } from "util/translate";
-function CardForHomePage({ product }: { product: Products }) {
+function CardForHomePage({ category }: { category: Category }) {
   const dispatch = useDispatch();
   let location = useLocation();
 
   return (
-    <Card key={product._id}>
+    <Card key={category._id}>
       <NavLink
-        to={`/modal/product/${product._id}`}
-        state={{ props: product, modalLocation: location }}
+        to={`/categories/${category._id}`}
+        state={{ props: category, modalLocation: location }}
       >
         <>
-          <Image src={product.image} alt={product.title} />
+          <Image src={category.image} alt={category.title} category />
           <CardFooter>
-            <Title>{product.title}</Title>
+            <Title>{category.title}</Title>
           </CardFooter>
           <FloatingDiv>לצפיה מהירה</FloatingDiv>
         </>
       </NavLink>
-      <Button onClick={() => dispatch(addToCart(product))}>
-        {translate("Add to cart")}
-      </Button>
     </Card>
   );
 }

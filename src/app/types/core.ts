@@ -164,3 +164,24 @@ export interface GoogleRes {
   name: string;
   sub: string;
 }
+
+export interface Category {
+  _id: string;
+  title: string;
+  otherLanguageTitle: {
+    hebrew: string;
+    russian: string;
+    default: string;
+  };
+  description: string;
+  otherLanguageDescription: {
+    hebrew: string;
+    russian: string;
+    default: string;
+  };
+  image: string;
+  images: [];
+  Products: Products[];
+}
+
+

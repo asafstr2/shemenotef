@@ -1,15 +1,16 @@
 import React, { useRef } from "react";
-import { Products } from "app/types/core";
+import { Products, Category } from "app/types/core";
 
 import { Container, CardContainer } from "./homepage.style";
 import Carusale from "./Carusale";
 import AboutMe from "./AboutMe";
 import Loader from "components/utils/Loader";
 import Card from "components/cards/ProductCardForHomePage";
+import CategoryCard from "components/cards/CategoryCardForHomePage";
+
 //@ts-ignore
 import Fade from "react-reveal/Fade";
 import { styled } from "@mui/material/styles";
-import { productsApi } from "app/services/productsApi";
 
 const StyledDivider = styled("hr")(({ theme }) => ({
   width: "10%",
@@ -31,11 +32,12 @@ const StyledTitle = styled("h2")(({ theme }) => ({
 interface Props {
   productLoading: boolean;
   products: Products[];
+  categories: Category[];
 }
 const scrollToRef = (ref: React.RefObject<HTMLElement>) => {
   window.scrollTo({ top: ref.current?.offsetTop, behavior: "smooth" });
 };
-function Homepage({ productLoading, products }: Props) {
+function Homepage({ productLoading, products, categories }: Props) {
   const adminPrefferedProducts = products.filter(
     (product: Products) => product.featured
   );
@@ -64,8 +66,8 @@ function Homepage({ productLoading, products }: Props) {
         <StyledTitle> קטגוריות</StyledTitle>
         <StyledDivider />
         <CardContainer>
-          {adminPrefferedProducts?.map((product: Products) => (
-            <Card product={product} key={product._id} />
+          {categories?.map((category: Category) => (
+            <CategoryCard category={category} key={category._id} />
           ))}
         </CardContainer>
       </Fade>
