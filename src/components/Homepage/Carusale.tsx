@@ -64,7 +64,11 @@ const HeaderText = styled.h1`
 
   @media (max-width: 768px) {
     bottom: 120px;
-    font-size: 2rem;
+    font-size: 1.5rem;
+  }
+  @media (max-width: 335px) {
+    bottom: 120px;
+    font-size: 1rem;
   }
 `;
 
@@ -77,7 +81,11 @@ const Text = styled.h2`
 
   @media (max-width: 768px) {
     bottom: 90px;
-    font-size: 1.2rem;
+    font-size: 1rem;
+  }
+  @media (max-width: 335px) {
+    bottom: 90px;
+    font-size: 0.5rem;
   }
 `;
 
