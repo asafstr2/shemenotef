@@ -16,7 +16,7 @@ import { Language } from "util/const";
 import { useSelector } from "react-redux";
 import { getTotals } from "app/slices/cartSlice";
 import Cart from "routes/cart/Cart";
-import { Popover } from "antd";
+import Popover from "@mui/material/Popover";
 import { ShoppingCartOutlined } from "@mui/icons-material";
 import AvatarLogin from "./AvatarLogin";
 import { useMediaQuery } from "@mui/material";
@@ -87,29 +87,27 @@ const Logo = styled("div")(({ theme }) => ({
     width: "30px",
   },
 }));
-const CartPopoverContent = styled("div")({
-  width: 500,
-  padding: 20,
-  "@media only screen and (max-width: 768px)": {
-    width: 300,
-  },
-});
 
 export default function PrimarySearchAppBar(props: Props) {
   const isMobile = useMediaQuery("(max-width:600px)");
 
   const { cartTotalQuantity } = useSelector(getTotals);
-  const [cartVisible, setCartVisible] = React.useState(false);
 
-  const handleCartVisibleChange = (visible: boolean) => {
-    handleMenuClose();
-    setCartVisible(visible);
+  const [cartAnchorEl, setCartAnchorEl] = React.useState(null);
+
+  const handleCartOpen = (event: any) => {
+    setCartAnchorEl(event.currentTarget);
   };
 
+  const handleCartClose = () => {
+    setCartAnchorEl(null);
+  };
+
+  const cartOpen = Boolean(cartAnchorEl);
   const cartPopoverContent = (
-    <CartPopoverContent>
-      <Cart handleCartVisibleChange={handleCartVisibleChange} />
-    </CartPopoverContent>
+    <Box sx={{ width: { xs: 300, sm: 400, md: 500, lg: 700 }, p: 2 }}>
+      <Cart handleCartVisibleChange={handleCartClose} />
+    </Box>
   );
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] =
     React.useState<null | HTMLElement>(null);
@@ -118,10 +116,6 @@ export default function PrimarySearchAppBar(props: Props) {
 
   const handleMobileMenuClose = () => {
     setMobileMoreAnchorEl(null);
-  };
-
-  const handleMenuClose = () => {
-    handleMobileMenuClose();
   };
 
   const handleMobileMenuOpen = (event: React.MouseEvent<HTMLElement>) => {
@@ -160,22 +154,14 @@ export default function PrimarySearchAppBar(props: Props) {
       open={isMobileMenuOpen}
       onClose={handleMobileMenuClose}
     >
-      <Popover
-        content={cartPopoverContent}
-        trigger="click"
-        open={cartVisible}
-        onOpenChange={handleCartVisibleChange}
-        placement="bottomRight"
-      >
-        <MenuItem>
-          <IconButton size="large" aria-label="cart" color="inherit">
-            <Badge badgeContent={cartTotalQuantity} color="info">
-              <ShoppingCartOutlined />
-            </Badge>
-          </IconButton>
-          <p>Cart</p>
-        </MenuItem>
-      </Popover>
+      <MenuItem>
+        <IconButton size="large" aria-label="cart" color="inherit">
+          <Badge badgeContent={cartTotalQuantity} color="info">
+            <ShoppingCartOutlined onClick={handleCartOpen} />
+          </Badge>
+        </IconButton>
+        <p>Cart</p>
+      </MenuItem>
 
       <MenuItem>
         <IconButton
@@ -222,16 +208,24 @@ export default function PrimarySearchAppBar(props: Props) {
             color="inherit"
           >
             <Popover
-              content={cartPopoverContent}
-              trigger="click"
-              open={cartVisible}
-              onOpenChange={handleCartVisibleChange}
-              placement="bottomRight"
+              id="cart-popover"
+              open={cartOpen}
+              anchorEl={cartAnchorEl}
+              onClose={handleCartClose}
+              anchorOrigin={{
+                vertical: "bottom",
+                horizontal: "right",
+              }}
+              transformOrigin={{
+                vertical: "top",
+                horizontal: "right",
+              }}
             >
-              <Badge badgeContent={cartTotalQuantity} color="info">
-                <ShoppingCartOutlined />
-              </Badge>
+              {cartPopoverContent}
             </Popover>
+            <Badge badgeContent={cartTotalQuantity} color="info">
+              <ShoppingCartOutlined onClick={handleCartOpen} />
+            </Badge>
           </IconButton>
 
           <IconButton
