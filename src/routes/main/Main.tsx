@@ -22,7 +22,7 @@ import { Category, Products } from "app/types/core";
 import { MainWrapper } from "./Main.style";
 import ProductPageRedirect from "components/product/ProductPageRedirect";
 import AddCategory from "routes/admin/AddCategory";
-
+import BlogPost from "components/blog/BlogPost";
 function Main() {
   let location = useLocation();
   let modalLocation = location?.state?.modalLocation;
@@ -102,6 +102,8 @@ function Main() {
           />
           <Route path="/categories/:categoryid" element={<CategoriesMain />} />
           <Route path="/cart" element={<Cart />} />
+          <Route path="/blogs/:blogid" element={<BlogPost />} />
+
           <Route
             path="/checkout"
             element={

@@ -5,6 +5,7 @@ import { categoriesApi, categoriesApiAdmin } from "app/services/categoriesApi";
 import { usersApi } from "app/services/userService";
 import { authApi } from "app/services/authService";
 import { payApi } from "app/services/paymant";
+import { contactUsApi } from "app/services/contactUsApi";
 import { rtkQueryErrorOrSuccessLogger } from "app/services/errorOrSuccessMiddleware";
 import cartReducer from "app/slices/cartSlice";
 import checkoutSlice, { nextPage } from "app/slices/checkoutSlice";
@@ -18,6 +19,7 @@ export const store = configureStore({
     [productsApiAdmin.reducerPath]: productsApiAdmin.reducer,
     [authApi.reducerPath]: authApi.reducer,
     [payApi.reducerPath]: payApi.reducer,
+    [contactUsApi.reducerPath]: contactUsApi.reducer,
     [categoriesApi.reducerPath]: categoriesApi.reducer,
     [categoriesApiAdmin.reducerPath]: categoriesApiAdmin.reducer,
     cart: cartReducer,
@@ -34,6 +36,7 @@ export const store = configureStore({
       categoriesApiAdmin.middleware,
       authApi.middleware,
       payApi.middleware,
+      contactUsApi.middleware,
       usersApi.middleware
     ),
 });

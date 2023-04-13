@@ -185,3 +185,9 @@ export interface Category {
 }
 
 
+export interface Report {
+  name: string;
+  report: string;
+  phone: string;
+  reporterMail: string;
+}

@@ -25,7 +25,6 @@ import {
   ButtonWrapper,
   Footer,
 } from "./Cart.style";
-import { TextField } from "@mui/material";
 
 const Cart = ({
   handleCartVisibleChange,
@@ -38,7 +37,6 @@ const Cart = ({
   const lang = useSelector((state: RootState) => state.lang.lang);
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const [cupponsField, setCupponsFields] = useState("");
 
   useEffect(() => {
     dispatch(translateCart({}));
@@ -70,23 +68,6 @@ const Cart = ({
         <Total>{`${Number(shipping + cart.cartTotalAmount)}${CURRENCY}`}</Total>
       </FlexText>
       <Footer>
-        {/* <ButtonWrapper>
-          <form
-            onSubmit={(e) => {
-              e.preventDefault();
-              dispatch(applyCoupon(cupponsField));
-            }} //@ts-ignore
-          >
-            <TextField
-              name={"cuppons"}
-              value={cupponsField}
-              onChange={(e) => setCupponsFields(e.target.value)}
-              required
-              id={"cuppons"}
-              label={translate("cuppons")}
-            />
-          </form>
-        </ButtonWrapper> */}
         <ButtonWrapper>
           <Button
             onClick={() => {

@@ -11,6 +11,8 @@ import CategoryCard from "components/cards/CategoryCardForHomePage";
 //@ts-ignore
 // import Fade from "react-reveal/Fade";
 import { styled } from "@mui/material/styles";
+import MyBlogSection from "components/blog/BlogHomepageSection";
+import ContactUsMain from "components/contact-us/ContactUsMain";
 
 const StyledDivider = styled("hr")(({ theme }) => ({
   width: "10%",
@@ -71,6 +73,8 @@ function Homepage({ productLoading, products, categories }: Props) {
         ))}
       </CardContainer>
       {/* </Fade> */}
+      <MyBlogSection />
+      <ContactUsMain />
     </Container>
   );
 }

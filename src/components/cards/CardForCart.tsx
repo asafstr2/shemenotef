@@ -12,8 +12,8 @@ import {
   TitleSub,
   ButtonWrapper,
   PriceWrapper,
-  Border,
 } from "./CardForCart.style";
+import Paper from "@mui/material/Paper";
 
 interface Props {
   image: any;
@@ -37,7 +37,7 @@ function CardForCart(props: Props) {
   } = props;
 
   return (
-    <>
+    <Paper elevation={1}>
       <CardWrapper>
         <ImageWrapper>
           <CardMedia
@@ -72,8 +72,7 @@ function CardForCart(props: Props) {
           </PriceWrapper>
         )}
       </CardWrapper>
-      <Border />
-    </>
+    </Paper>
   );
 }
 

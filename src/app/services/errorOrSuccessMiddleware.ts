@@ -36,10 +36,13 @@ export const rtkQueryErrorOrSuccessLogger =
     }
     if (isFulfilled(action)) {
       if (action.meta.arg.type === "mutation") {
+        console.log({ action });
         const args = action?.meta?.arg?.originalArgs;
         const title = args.title && args.title + " saved successfully";
         const username = args.username && "welcome " + args.username;
-        toast.success(title || username, {
+        const payloadString =
+          typeof action.payload === "string" ? action.payload : null;
+        toast.success(payloadString || title || username, {
           position: "top-left",
           autoClose: getTimeInSeconds(PresentingTimeInSeconds),
           hideProgressBar: false,

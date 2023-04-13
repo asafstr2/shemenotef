@@ -4,6 +4,7 @@ export const CardWrapper = styled("div")({
   display: "flex",
   alignItems: "center",
   padding: "16px 8px",
+  margin: "20px 0", // Add margin between the cards
   "@media (max-width: 600px)": {
     padding: "12px 4px",
   },
@@ -17,6 +18,7 @@ export const ImageWrapper = styled("div")({
   alignItems: "center",
   justifyContent: "center",
   marginRight: "12px",
+
   "@media (max-width: 600px)": {
     width: "80px",
     height: "80px",
@@ -72,8 +74,4 @@ export const PriceWrapper = styled("div")({
     fontSize: "16px",
     minWidth: "40px",
   },
-});
-
-export const Border = styled("div")({
-  borderBottom: "1px solid #eee",
 });

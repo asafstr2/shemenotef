@@ -7,7 +7,7 @@ import { baseQueryWitParamsAndhUser } from "util/functions";
 export const payApi = createApi({
   reducerPath: "paymantApi",
   tagTypes: ["pay"],
-  baseQuery: baseQueryWitParamsAndhUser,
+  baseQuery: baseQueryWitParamsAndhUser(),
   endpoints: (build: any) => ({
     pay: build.mutation({
       query: (paymantData: PaymantData): any => ({

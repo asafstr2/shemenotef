@@ -6,11 +6,25 @@ import { useSelector } from "react-redux";
 import { language } from "util/const";
 import { RootState } from "app/store";
 import { GoogleOAuthProvider } from "@react-oauth/google";
+// import rtl from "jss-rtl";
+// import {
+//   StylesProvider,
+//   jssPreset,
+//   ThemeProvider,
+//   createTheme,
+// } from "@material-ui/core/styles";
 
 function App() {
   const lang = useSelector((state: RootState) => state.lang.lang);
+
+  const isRtl = lang === language.hebrew;
+  // const jss = create({ plugins: [...jssPreset().plugins, rtl()] });
+
+  React.useLayoutEffect(() => {
+    document.body.setAttribute("dir", isRtl ? "rtl" : "ltr");
+  }, [isRtl]);
   return (
-    <div dir={lang === language.hebrew ? "rtl" : "ltr"}>
+    <div dir={isRtl ? "rtl" : "ltr"}>
       <GoogleOAuthProvider
         clientId={
           process.env.REACT_APP_GOOGLE_LOGIN_ID ||
