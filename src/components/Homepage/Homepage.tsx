@@ -13,6 +13,7 @@ import CategoryCard from "components/cards/CategoryCardForHomePage";
 import { styled } from "@mui/material/styles";
 import MyBlogSection from "components/blog/BlogHomepageSection";
 import ContactUsMain from "components/contact-us/ContactUsMain";
+import Booking from "components/booking/Booking";
 
 const StyledDivider = styled("hr")(({ theme }) => ({
   width: "10%",
@@ -75,6 +76,7 @@ function Homepage({ productLoading, products, categories }: Props) {
       {/* </Fade> */}
       <MyBlogSection />
       <ContactUsMain />
+      <Booking />
     </Container>
   );
 }

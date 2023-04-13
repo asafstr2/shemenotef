@@ -10,7 +10,7 @@ import Typography from "@mui/material/Typography";
 import RtlProvider from "util/RtlProvider";
 import { useReportMutation } from "app/services/contactUsApi";
 
-const ContactForm = (): JSX.Element => {
+const ContactForm = ({ booking = false }): JSX.Element => {
   const [report, { isLoading }] = useReportMutation();
   const [form, setForm] = useState({});
   const handleSubmit = (e: any): void => {
@@ -23,30 +23,37 @@ const ContactForm = (): JSX.Element => {
 
   return (
     <Container>
-      <StyledTitle>צור קשר</StyledTitle>
-      <StyledDivider />
-      <ContactContainerWrapper>
-        <ContactContainer>
-          <TextWrapper>
-            <IconWrapper href="https://wa.me/0542772792" target="_blank">
-              <WhatsAppIcon />
-            </IconWrapper>
-            תמרה 0542772792
-          </TextWrapper>
-          <TextWrapper>
-            <IconWrapper href="mailto:Shemenotef@gmail.com" target="_blank">
-              <MailOutlineIcon />
-            </IconWrapper>
-            Shemenotef@gmail.com
-          </TextWrapper>
-          <TextWrapper>
-            <IconWrapperNoHover>
-              <ClockIcon />
-            </IconWrapperNoHover>
-            בתיאום מראש
-          </TextWrapper>
-        </ContactContainer>
-      </ContactContainerWrapper>
+      {!booking && (
+        <>
+          {" "}
+          <StyledTitle>צור קשר</StyledTitle>
+          <StyledDivider />
+        </>
+      )}
+      {!booking && (
+        <ContactContainerWrapper>
+          <ContactContainer>
+            <TextWrapper>
+              <IconWrapper href="https://wa.me/0542772792" target="_blank">
+                <WhatsAppIcon />
+              </IconWrapper>
+              תמרה 0542772792
+            </TextWrapper>
+            <TextWrapper>
+              <IconWrapper href="mailto:shemenotef@gmail.com" target="_blank">
+                <MailOutlineIcon />
+              </IconWrapper>
+              Shemenotef@gmail.com
+            </TextWrapper>
+            <TextWrapper>
+              <IconWrapperNoHover>
+                <ClockIcon />
+              </IconWrapperNoHover>
+              בתיאום מראש
+            </TextWrapper>
+          </ContactContainer>
+        </ContactContainerWrapper>
+      )}
       <RtlProvider>
         <Form onSubmit={handleSubmit}>
           <StyledTextField
@@ -71,7 +78,7 @@ const ContactForm = (): JSX.Element => {
             name="email"
           />
           <StyledTextField
-            label="הודעה"
+            label={!booking ? "הודעה" : "סיבת הפניה"}
             variant="outlined"
             multiline
             rows={4}
