@@ -32,10 +32,8 @@ function ThankYouPage() {
 
   return success ? (
     <div>
-      <h1>Thank you for your payment!</h1>
-      <p>
-        We have received your payment and your order will be processed shortly.
-      </p>
+      <h1>התשלום התקבל בהצלחה תודה!</h1>
+      <p>קיבלנו את ההזמנה ונתחיל לעבוד עליה בקרוב.</p>
     </div>
   ) : (
     <div>

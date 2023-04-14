@@ -21,7 +21,7 @@ import LoaderButton from "components/buttons/LoaderButton";
 function Copyright() {
   return (
     <Typography variant="body2" color="text.secondary" align="center">
-      {"Copyright © "}
+      {"Copyright Shemen otef© "}
       <Link color="inherit" href="/">
         {translate("shemenOtef")}
       </Link>{" "}
@@ -47,8 +47,7 @@ function getStepContent(
           setAllFieldsFilled={setAllFieldsFilled}
         />
       );
-    // case 1:
-    //   return <PaymentForm step={step} setData={setData} data={data} />;
+
     case 1:
       return <Review data={data} />;
     default:
