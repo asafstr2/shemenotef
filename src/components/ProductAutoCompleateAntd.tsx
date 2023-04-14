@@ -47,7 +47,7 @@ const AutocompleteComponent = ({ options, setOptions, refetch }: Props) => {
           </SearchIconWrapper>
           <StyledTextField
             {...params}
-            placeholder="Search…"
+            placeholder="חיפוש ..."
             onChange={handleSearchChange}
           />
         </Search>

@@ -1,15 +1,13 @@
 import * as React from "react";
-import { styled, alpha } from "@mui/material/styles";
+import { styled } from "@mui/material/styles";
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
 import Toolbar from "@mui/material/Toolbar";
 import IconButton from "@mui/material/IconButton";
 import Typography from "@mui/material/Typography";
-import InputBase from "@mui/material/InputBase";
 import Badge from "@mui/material/Badge";
 import MenuItem from "@mui/material/MenuItem";
 import Menu from "@mui/material/Menu";
-import SearchIcon from "@mui/icons-material/Search";
 import MoreIcon from "@mui/icons-material/MoreVert";
 import { Products } from "app/types/core";
 import { Language } from "util/const";
@@ -22,54 +20,6 @@ import AvatarLogin from "./AvatarLogin";
 import { useMediaQuery } from "@mui/material";
 import NavLink from "components/utils/Link";
 import Searchtest from "components/ProductAutoCompleateAntd";
-
-const StyledAppBar = styled(AppBar)(({ theme }) => ({}));
-const Search = styled("div")(({ theme }) => ({
-  position: "relative",
-  borderRadius: theme.shape.borderRadius,
-  backgroundColor: alpha(theme.palette.common.white, 0.15),
-  "&:hover": {
-    backgroundColor: alpha(theme.palette.common.white, 0.25),
-  },
-  marginInlineStart: theme.spacing(2),
-  marginInlineEnd: 0,
-  width: "100%",
-  [theme.breakpoints.up("sm")]: {
-    marginInlineStart: theme.spacing(3),
-    width: "auto",
-  },
-}));
-
-const SearchIconWrapper = styled("div")(({ theme }) => ({
-  padding: theme.spacing(0, 2),
-  height: "100%",
-  position: "absolute",
-  pointerEvents: "none",
-  display: "flex",
-  alignItems: "center",
-  justifyContent: "center",
-}));
-
-const StyledInputBase = styled(InputBase)(({ theme }) => ({
-  color: "inherit",
-  "& .MuiInputBase-input": {
-    padding: theme.spacing(1, 1, 1, 0),
-    // vertical padding + font size from searchIcon
-    paddingInlineStart: `calc(1em + ${theme.spacing(4)})`,
-    transition: theme.transitions.create("width"),
-    width: "100%",
-    [theme.breakpoints.up("md")]: {
-      width: "20ch",
-    },
-  },
-}));
-interface Props {
-  className?: string;
-  options: Products[];
-  setOptions: React.Dispatch<React.SetStateAction<Products[]>>;
-  refetch?: () => void;
-  lang: Language;
-}
 
 const Logo = styled("div")(({ theme }) => ({
   margin: 0,
@@ -88,6 +38,13 @@ const Logo = styled("div")(({ theme }) => ({
     width: "30px",
   },
 }));
+interface Props {
+  className?: string;
+  options: Products[];
+  setOptions: React.Dispatch<React.SetStateAction<Products[]>>;
+  refetch?: () => void;
+  lang: Language;
+}
 
 export default function PrimarySearchAppBar(props: Props) {
   const isMobile = useMediaQuery("(max-width:600px)");
@@ -180,7 +137,7 @@ export default function PrimarySearchAppBar(props: Props) {
   );
 
   return (
-    <StyledAppBar className={shrink ? "shrink" : ""} position="sticky">
+    <AppBar className={shrink ? "shrink" : ""} position="sticky">
       <Toolbar>
         <NavLink to="/">
           <Typography variant="h6" noWrap component="div">
@@ -246,6 +203,6 @@ export default function PrimarySearchAppBar(props: Props) {
         </Box>
       </Toolbar>
       {isMobile && renderMobileMenu}
-    </StyledAppBar>
+    </AppBar>
   );
 }

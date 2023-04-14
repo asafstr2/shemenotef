@@ -3,9 +3,9 @@ import { langConst, language, languageForLC } from "util/const";
 import { languageLcSet } from "util/translate";
 
 const initialState = {
-  lang:
-    (localStorage[languageForLC] && JSON.parse(localStorage[languageForLC])) ||
-    language.english,
+  lang: language.hebrew as "hebrew",
+  // (localStorage[languageForLC] && JSON.parse(localStorage[languageForLC])) ||
+  // language.english,
   langConst,
 };
 

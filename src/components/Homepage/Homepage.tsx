@@ -1,37 +1,22 @@
 import React, { useRef } from "react";
 import { Products, Category } from "app/types/core";
 
-import { Container, CardContainer } from "./homepage.style";
+import {
+  Container,
+  CardContainer,
+  StyledDivider,
+  StyledTitle,
+} from "./homepage.style";
 import Carusale from "./Carusale";
 import AboutMe from "./AboutMe";
 import Loader from "components/utils/Loader";
 import Card from "components/cards/ProductCardForHomePage";
 import CategoryCard from "components/cards/CategoryCardForHomePage";
 
-//@ts-ignore
-// import Fade from "react-reveal/Fade";
-import { styled } from "@mui/material/styles";
 import MyBlogSection from "components/blog/BlogHomepageSection";
 import ContactUsMain from "components/contact-us/ContactUsMain";
 import Booking from "components/booking/Booking";
 
-const StyledDivider = styled("hr")(({ theme }) => ({
-  width: "10%",
-  height: "3px",
-  margin: "20px auto 20px auto",
-  backgroundColor: theme.palette.primary.light,
-}));
-const StyledTitle = styled("h2")(({ theme }) => ({
-  marginBlockStart: "100px",
-  fontWeight: "bold",
-  textAlign: "center",
-  [theme.breakpoints.up("sm")]: {
-    fontSize: "2rem",
-  },
-  [theme.breakpoints.down("xs")]: {
-    fontSize: "1.5rem",
-  },
-}));
 interface Props {
   productLoading: boolean;
   products: Products[];
@@ -54,11 +39,8 @@ function Homepage({ productLoading, products, categories }: Props) {
   return (
     <Container>
       <Carusale scrollToCardContainer={scrollToCardContainer} />
-      {/* <Fade bottom cascade> */}
       <AboutMe />
-      {/* </Fade> */}
       <div ref={CardContainerRef}> </div>
-      {/* <Fade bottom cascade> */}
       <StyledTitle>מוצרים מומלצים</StyledTitle>
       <StyledDivider />
       <CardContainer>
@@ -73,7 +55,6 @@ function Homepage({ productLoading, products, categories }: Props) {
           <CategoryCard category={category} key={category._id} />
         ))}
       </CardContainer>
-      {/* </Fade> */}
       <MyBlogSection />
       <ContactUsMain />
       <Booking />
