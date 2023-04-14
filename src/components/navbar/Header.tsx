@@ -21,6 +21,7 @@ import { ShoppingCartOutlined } from "@mui/icons-material";
 import AvatarLogin from "./AvatarLogin";
 import { useMediaQuery } from "@mui/material";
 import NavLink from "components/utils/Link";
+import Searchtest from "components/ProductAutoCompleateAntd";
 
 const StyledAppBar = styled(AppBar)(({ theme }) => ({}));
 const Search = styled("div")(({ theme }) => ({
@@ -191,15 +192,7 @@ export default function PrimarySearchAppBar(props: Props) {
             </Logo>
           </Typography>
         </NavLink>
-        <Search>
-          <SearchIconWrapper>
-            <SearchIcon />
-          </SearchIconWrapper>
-          <StyledInputBase
-            placeholder="Search…"
-            inputProps={{ "aria-label": "search" }}
-          />
-        </Search>
+        <Searchtest {...props} />
         <Box sx={{ flexGrow: 1 }} />
         <Box sx={{ display: { xs: "none", md: "flex" } }}>
           <IconButton

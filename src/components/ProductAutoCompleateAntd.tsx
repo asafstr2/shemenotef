@@ -1,13 +1,12 @@
-import React, { useEffect, useState } from "react";
-import useDebounce from "hooks/useDebounce";
-import { BASEURL } from "util/const";
-import { extractToken } from "util/functions";
-import { AutoComplete } from "antd";
-import SearchIcon from "@mui/icons-material/Search";
-import { translate } from "util/translate";
-import { language, Language } from "util/const";
+import React, { useState } from "react";
+import TextField from "@mui/material/TextField";
+import Autocomplete from "@mui/material/Autocomplete";
+import axios from "axios";
+import { BASEURL, Language } from "util/const";
 import { Products } from "app/types/core";
-import styled from "styled-components";
+import _ from "lodash";
+import { alpha, styled } from "@mui/material";
+import SearchIcon from "@mui/icons-material/Search";
 
 interface Props {
   className?: string;
@@ -17,103 +16,83 @@ interface Props {
   lang: Language;
 }
 
-const Container = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin-inline-start: auto;
-  margin-inline-end: 50px;
-
-  @media screen and (max-width: 768px) {
-    margin-inline-end: 0;
-    margin-right: 10px;
-  }
-`;
-
-const SearchInput = styled(AutoComplete)`
-  width: 200px;
-  transition: width 0.2s ease;
-  &:focus-within {
-    width: 500px;
-  }
-  @media screen and (max-width: 768px) {
-    width: 20px;
-
-    & input {
-      font-size: 12px;
-    }
-    &:focus-within {
-      width: 200px;
-    }
-  }
-`;
-
-export default function Search({
-  className,
-  options,
-  setOptions,
-  refetch,
-  lang,
-}: Props) {
-  const { Option } = AutoComplete;
-  const [searchTerm, setSearchTerm] = useState("");
-  const debouncedSearchTerm = useDebounce(searchTerm, 500);
-  const handleChange = (productName: string) => {
-    setOptions &&
-      setOptions(
-        options?.filter((product) => product.title === productName) ?? []
-      );
-  };
-  useEffect(() => {
-    if (debouncedSearchTerm || searchTerm.length === 0) {
-      searchCharacters(debouncedSearchTerm).then((results) => {
-        if (results) {
-          setOptions && setOptions(results);
-        } else {
-          setOptions && setOptions([]);
-        }
-      });
+const AutocompleteComponent = ({ options, setOptions, refetch }: Props) => {
+  const handleInputChange = _.debounce(async (value: string) => {
+    if (value.length > 0) {
+      const url = `${BASEURL}/products/autocomplete?search=${value}`;
+      const response = await axios.get(url);
+      setOptions(response.data);
     } else {
-      setOptions && setOptions([]);
+      refetch?.();
+      setOptions([]);
     }
-  }, [debouncedSearchTerm, searchTerm.length, setOptions]);
+  }, 500);
 
-  // API search function
-  function searchCharacters(search: string) {
-    const URL =
-      search.length > 0
-        ? `${BASEURL}/products/autocomplete?search=${search}`
-        : `${BASEURL}/products`;
-    return fetch(URL, {
-      method: "GET",
-      //@ts-ignore
-      authorization: `Bearer ${extractToken()}`,
-    })
-      .then((r) => r.json())
-      .catch((error) => {
-        console.error(error);
-        return [];
-      });
-  }
+  const handleSearchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    handleInputChange(event.target.value);
+  };
+  console.log(options);
 
   return (
-    <Container className={className}>
-      <SearchIcon />
-      <SearchInput
-        value={searchTerm}
-        onSelect={(value) => handleChange(value as string)}
-        onSearch={(searchText) => setSearchTerm(searchText)}
-        onChange={(searchText) => setSearchTerm(searchText as string)}
-        filterOption
-        placeholder={translate("Search")}
-        notFoundContent="no results"
-      >
-        {options?.map((product) => (
-          <Option key={product._id} value={product.title}>
-            {product.title}
-          </Option>
-        ))}
-      </SearchInput>
-    </Container>
+    <Autocomplete
+      // freeSolo
+      sx={{ marginInlineEnd: "10%", InlineStart: "30px" }}
+      fullWidth
+      options={options}
+      getOptionLabel={(option?: any) => option.title ?? ""}
+      renderInput={(params: any) => (
+        <Search>
+          <SearchIconWrapper>
+            <SearchIcon />
+          </SearchIconWrapper>
+          <StyledTextField
+            {...params}
+            placeholder="Search…"
+            onChange={handleSearchChange}
+          />
+        </Search>
+      )}
+    />
   );
-}
+};
+
+export default AutocompleteComponent;
+const Search = styled("div")(({ theme }) => ({
+  position: "relative",
+  borderRadius: theme.shape.borderRadius,
+  backgroundColor: alpha(theme.palette.common.white, 0.15),
+  "&:hover": {
+    backgroundColor: alpha(theme.palette.common.white, 0.25),
+  },
+  marginInlineStart: theme.spacing(2),
+  marginInlineEnd: 0,
+  width: "100%",
+  [theme.breakpoints.up("sm")]: {
+    marginInlineStart: theme.spacing(3),
+    width: "auto",
+  },
+}));
+
+const SearchIconWrapper = styled("div")(({ theme }) => ({
+  padding: theme.spacing(0, 4),
+  height: "100%",
+  position: "absolute",
+  pointerEvents: "none",
+  display: "flex",
+  alignItems: "center",
+  justifyContent: "center",
+}));
+
+const StyledTextField = styled(TextField)(({ theme }) => ({
+  color: "inherit",
+  width: "100%",
+
+  "& .MuiInputBase-root": {
+    paddingInlineStart: `calc(1em + ${theme.spacing(3)})`,
+    transition: theme.transitions.create("width"),
+  },
+  "& .MuiAutocomplete-input": {
+    marginInlineStart: `calc(1em + ${theme.spacing(1)})`,
+    transition: theme.transitions.create("width"),
+  },
+}));
