@@ -39,7 +39,6 @@ function Main() {
       refetchOnFocus: false,
     }
   );
-  console.log({ categoriesData });
   const {
     data,
     isLoading: productLoading,
@@ -121,7 +120,7 @@ function Main() {
             }
           />
           <Route
-            path="/admin/addProduct"
+            path="/admin/addProduct/:productId"
             element={
               <AdminRoute>
                 <AddProduct />

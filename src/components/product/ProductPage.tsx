@@ -3,7 +3,7 @@ import CardContent from "@mui/material/CardContent";
 import Typography from "@mui/material/Typography";
 import { CardActionArea, CardActions, Button } from "@mui/material";
 import { useDispatch } from "react-redux";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { addToCart } from "app/slices/cartSlice";
 import { translate } from "util/translate";
 import { AdminButtonsForDelete } from "components/buttons/AdminButtonsForDelete";
@@ -23,6 +23,8 @@ interface Props {
   images: any;
 }
 function ProductPage() {
+  const navigate = useNavigate();
+
   const componentRef = useRef(null);
   const reactToPrintContent = useCallback(() => {
     return componentRef.current;
@@ -117,6 +119,10 @@ function ProductPage() {
             </Button>
             <AdminButtonsForDelete productId={_id} title={title} />
             <AdminButton handleAction={() => setShowQr(true)} text="qr code" />
+            <AdminButton
+              handleAction={() => navigate(`/admin/addProduct/${_id}`)}
+              text="edit"
+            />
           </CardActions>
         </>
       )}

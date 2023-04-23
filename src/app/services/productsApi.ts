@@ -63,14 +63,28 @@ export const productsApiAdmin = createApi({
         method: "POST",
         body: product,
       }),
-      invalidatesTags: ["addProduct"],
+      invalidatesTags: ["getAllProducts", "getProductById"],
     }),
     deleteProduct: build.mutation({
       query: (id: string) => ({
         url: `/foradmin/${id}`,
         method: "DELETE",
       }),
-      invalidatesTags: ["deleteProduct"],
+      invalidatesTags: ["getAllProducts", "getProductById"],
+    }),
+    updateProduct: build.mutation({
+      query: ({
+        productId,
+        productData,
+      }: {
+        productId: string;
+        productData: Products;
+      }) => ({
+        url: `/foradmin/${productId}`,
+        method: "PUT",
+        body: productData,
+      }),
+      invalidatesTags: ["getAllProducts", "getProductById"],
     }),
   }),
 });
@@ -88,4 +102,5 @@ export const {
   useGetUploadAssetsUrlQuery,
   useAddProductMutation,
   useDeleteProductMutation,
+  useUpdateProductMutation,
 } = productsApiAdmin;

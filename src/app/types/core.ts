@@ -72,7 +72,10 @@ export interface Products {
   };
   image: string;
   images: [];
-  quantity: number;
+  quantity: {
+    value: number;
+    currency: string;
+  };
   quantetyInStock: number;
   featured: boolean;
   outOfStock: boolean;
@@ -100,6 +103,8 @@ export interface Products {
   timesPurchesed: string;
   discountedPrice: number;
   cartQuantity: number;
+  ingredients: string;
+  categoryid: string;
 }
 
 export interface Cart {
