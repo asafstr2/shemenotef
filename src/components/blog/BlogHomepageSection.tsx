@@ -8,19 +8,18 @@ const BlogMainSection = styled(Box)(({ theme }) => ({
   flexDirection: "column",
   gap: theme.spacing(4),
   width: "100%",
-  margin: theme.spacing(2),
+  alignItems: "center",
+  justifyContent: "center",
   background: "white",
-  paddingBlock: theme.spacing(12),
 }));
 
 const BlogSection = styled(Box)(({ theme }) => ({
   display: "flex",
-  width: "100%",
+  width: "90%",
   alignItems: "center",
   justifyContent: "center",
   flexDirection: "column",
   gap: theme.spacing(4),
-  margin: theme.spacing(2),
   [theme.breakpoints.up("md")]: {
     flexDirection: "row",
   },
@@ -31,12 +30,14 @@ const BlogItem = styled(Box)(({ theme }) => ({
   flexDirection: "column",
   alignItems: "center",
   gap: theme.spacing(2),
+  padding: theme.spacing(4),
 }));
 
 const StyledTitle = styled("h2")(({ theme }) => ({
   margin: "0 auto",
   fontWeight: "bold",
   textAlign: "center",
+  paddingBlockStart: theme.spacing(4),
   [theme.breakpoints.up("sm")]: {
     fontSize: "2rem",
   },
