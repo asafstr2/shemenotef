@@ -26,18 +26,20 @@ const StyledContainer = styled("div")(({ theme }) => ({
 const LeftSection = styled("div")(({ theme }) => ({
   display: "flex",
   flexDirection: "column",
-  maxWidth: "50%",
-  minWidth: "400px",
+  width: "50%",
+  maxWidth: "400px",
+  minWidth: "230px",
   gap: theme.spacing(2),
-  [theme.breakpoints.down("sm")]: { minWidth: "300px", maxHeight: "50%" },
+  [theme.breakpoints.down("sm")]: { maxHeight: "50%" },
 }));
 const RightSection = styled("div")(({ theme }) => ({
   display: "flex",
   flexDirection: "column",
-  maxWidth: "50%",
-  minWidth: "400px",
+  width: "50%",
+  maxWidth: "400px",
+  minWidth: "230px",
   gap: theme.spacing(2),
-  [theme.breakpoints.down("sm")]: { minWidth: "200px", maxHeight: "50%" },
+  [theme.breakpoints.down("sm")]: { maxHeight: "50%" },
 }));
 const StyledHeader = styled(Typography)(({ theme }) => ({
   //   [theme.breakpoints.down("sm")]: {},
@@ -66,6 +68,12 @@ const ProductDescription = styled(Typography)(({ theme }) => ({
   //   [theme.breakpoints.down("sm")]: {},
 }));
 
+const AdminPanel = styled("div")(({ theme }) => ({
+  display: "flex",
+  width: "100%",
+  justifyContent: "space-between",
+  //   [theme.breakpoints.down("sm")]: {},
+}));
 function ProductPage() {
   const navigate = useNavigate();
 
@@ -124,26 +132,54 @@ function ProductPage() {
         >
           קנה עכשיו
         </StyledBuyNowButton>
-        <AdminButtonsForDelete
-          productId={_id}
-          title={title}
-          variant="contained"
-          // fullWidth
-        />
-        <AdminButton
-          handleAction={() => setShowQr(true)}
-          text="qr code"
-          variant="contained"
-          // fullWidth
-        />
-        <AdminButton
-          variant="contained"
-          // fullWidth
-          handleAction={() => navigate(`/admin/addProduct/${_id}`)}
-          text="edit"
-        />
+        <AdminPanel>
+          <AdminButtonsForDelete
+            productId={_id}
+            title={title}
+            variant="contained"
+            // fullWidth
+          />
+
+          <AdminButton
+            handleAction={() => setShowQr(true)}
+            text="qr code"
+            variant="contained"
+            // fullWidth
+          />
+          <AdminButton
+            variant="contained"
+            // fullWidth
+            handleAction={() => navigate(`/admin/addProduct/${_id}`)}
+            text="edit"
+          />
+        </AdminPanel>
       </ButtonsContainer>
       <ProductDescription>{description}</ProductDescription>
+      {showQr && (
+        <div
+          style={{
+            height: "100%",
+            maxWidth: "100%",
+            width: "100%",
+            display: "flex",
+            flexDirection: "column",
+            justifyContent: "center",
+            alignItems: "center",
+          }}
+        >
+          <QRCode
+            size={256}
+            value={path}
+            viewBox={`0 0 256 256`}
+            ref={componentRef}
+            onClick={handlePrint}
+          />
+          <div style={{ display: "flex", gap: "10px" }}>
+            <Button onClick={handlePrint}>print</Button>
+            <Button onClick={() => setShowQr(false)}>hide</Button>
+          </div>
+        </div>
+      )}
     </div>
   );
   return (

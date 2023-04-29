@@ -12,21 +12,21 @@ export const productsApi = createApi({
     getAllProducts: build.query({
       query: () => `products`,
       providesTags: ["getAllProducts"],
-      transformResponse: (response: any, meta: any, arg: any) => {
-        const lang: "hebrew" | "russian" = store.getState().lang.lang;
-        const mutateResponse: Products[] = response?.map(
-          (product: Products) => ({
-            ...product,
-            title:
-              product.otherLanguageTitle[lang] ??
-              product.otherLanguageTitle.default,
-            description:
-              product.otherLanguageDescription[lang] ??
-              product.otherLanguageDescription.default,
-          })
-        );
-        return mutateResponse;
-      },
+      //   transformResponse: (response: any, meta: any, arg: any) => {
+      //     const lang: "hebrew" | "russian" = store.getState().lang.lang;
+      //     const mutateResponse: Products[] = response?.map(
+      //       (product: Products) => ({
+      //         ...product,
+      //         title:
+      //           product.otherLanguageTitle[lang] ??
+      //           product.otherLanguageTitle.default,
+      //         description:
+      //           product.otherLanguageDescription[lang] ??
+      //           product.otherLanguageDescription.default,
+      //       })
+      //     );
+      //     return mutateResponse;
+      //   },
     }),
     getProductById: build.query({
       query: ({ id }: { id: string }) => `products/${id}`,
@@ -104,3 +104,5 @@ export const {
   useDeleteProductMutation,
   useUpdateProductMutation,
 } = productsApiAdmin;
+
+
