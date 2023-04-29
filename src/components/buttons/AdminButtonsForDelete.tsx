@@ -11,6 +11,7 @@ import LoaderButton from "components/buttons/LoaderButton";
 interface Props {
   productId: string | number;
   title: string;
+  variant?: "contained" | "outlined" | "text";
 }
 export function AdminButtonsForDelete({ productId, title }: Props) {
   const dispatch = useDispatch();
@@ -45,7 +46,7 @@ export function AdminButtonsForDelete({ productId, title }: Props) {
             color="error"
             handleSubmit={handleDelete}
             buttonText={translate("delete")}
-            variant="text"
+            variant="outlined"
             loading={isLoading}
           />
         </div>

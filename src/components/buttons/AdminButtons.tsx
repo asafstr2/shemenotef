@@ -8,8 +8,14 @@ interface Props {
   handleAction: () => void;
   loading?: boolean;
   text: string;
+  variant?: "contained" | "outlined" | "text";
 }
-export function AdminButton({ handleAction, loading = false, text }: Props) {
+export function AdminButton({
+  handleAction,
+  loading = false,
+  text,
+  variant,
+}: Props) {
   const isAdmin = useSelector(isAnAdmin);
 
   return (
@@ -21,7 +27,7 @@ export function AdminButton({ handleAction, loading = false, text }: Props) {
             color="primary"
             handleSubmit={handleAction}
             buttonText={text}
-            variant="text"
+            variant={variant ?? "text"}
             loading={loading}
           />
         </div>
