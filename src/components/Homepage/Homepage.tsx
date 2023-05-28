@@ -16,6 +16,8 @@ import CategoryCard from "components/cards/CategoryCardForHomePage";
 import MyBlogSection from "components/blog/BlogHomepageSection";
 import ContactUsMain from "components/contact-us/ContactUsMain";
 import Booking from "components/booking/Booking";
+import { Link, useNavigate } from "react-router-dom";
+import { AdminButton } from "components/buttons/AdminButtons";
 
 interface Props {
   productLoading: boolean;
@@ -26,6 +28,7 @@ const scrollToRef = (ref: React.RefObject<HTMLElement>) => {
   window.scrollTo({ top: ref.current?.offsetTop, behavior: "smooth" });
 };
 function Homepage({ productLoading, products, categories }: Props) {
+  const navigate = useNavigate();
   const adminPrefferedProducts = products.filter(
     (product: Products) => product.featured
   );
@@ -36,12 +39,19 @@ function Homepage({ productLoading, products, categories }: Props) {
     scrollToRef(myRef);
   };
   const scrollToCardContainer = () => handleScrollToElement(CardContainerRef);
+
   return (
     <Container>
       <Carusale scrollToCardContainer={scrollToCardContainer} />
       <AboutMe />
       <div ref={CardContainerRef}> </div>
       <StyledTitle>מוצרים מומלצים</StyledTitle>
+      <div>
+        <AdminButton
+          handleAction={() => navigate(`/admin/addProduct`)}
+          text="הוסף מוצר חדש"
+        />{" "}
+      </div>
       <StyledDivider />
       <CardContainer>
         {adminPrefferedProducts?.map((product: Products) => (
@@ -49,6 +59,12 @@ function Homepage({ productLoading, products, categories }: Props) {
         ))}
       </CardContainer>
       <StyledTitle> קטגוריות</StyledTitle>
+      <div>
+        <AdminButton
+          handleAction={() => navigate(`/admin/addCategory`)}
+          text="הוסף קטגוריה חדשה"
+        />{" "}
+      </div>
       <StyledDivider />
       <CardContainer>
         {categories?.map((category: Category) => (
