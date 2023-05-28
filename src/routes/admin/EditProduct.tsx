@@ -1,5 +1,5 @@
 /* eslint-disable array-callback-return */
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { translate } from "util/translate";
 import TextField from "@mui/material/TextField";
 import MenuItem from "@mui/material/MenuItem";
@@ -9,16 +9,51 @@ import Checkbox from "@mui/material/Checkbox";
 import {
   useAddProductMutation,
   useGetUploadAssetsUrlQuery,
+  useUpdateProductMutation,
+  useGetProductByIdQuery,
 } from "app/services/productsApi";
 import { useGetAllcategoriesQuery } from "app/services/categoriesApi";
 import DragNdrop from "components/utils/DragNDrop";
 import { uploadFiles } from "util/functions";
 import LoaderButton from "components/buttons/LoaderButton";
 import { Category } from "app/types/core";
-import Select from "@mui/material/Select";
+import { useParams } from "react-router-dom";
+import { Products } from "app/types/core";
+
+const currencies = [
+  {
+    value: "USD",
+    label: "$",
+  },
+  {
+    value: "EUR",
+    label: "€",
+  },
+  {
+    value: "NIS",
+    label: "₪",
+  },
+];
+const quantityCurrency = [
+  {
+    value: "GRAM",
+    label: "g",
+  },
+  {
+    value: "MIL",
+    label: "ml",
+  },
+];
 function AddProduct() {
-  const [updateProuduct, { isLoading }] = useAddProductMutation();
-  const [form, setForm] = useState(fields);
+  const { productId } = useParams();
+
+  const { data: product, isLoading: productLoading } = useGetProductByIdQuery({
+    id: productId,
+  }) as { data: Products; isLoading: boolean };
+
+  const [AddProuduct, { isLoading }] = useAddProductMutation();
+  const [UpdateProuduct, { isLoading: updateLoading }] =
+    useUpdateProductMutation();
 
   const [files, setFiles] = useState([]);
   const [isUploading, setIsUploading] = useState(false);
@@ -46,10 +81,50 @@ function AddProduct() {
   const handleSubmit = async () => {
     setIsUploading(true);
     //@ts-ignore
-    const results = await uploadFiles(uploadObject, files);
+    const results = files ? await uploadFiles(uploadObject, files) : [];
+    console.log({ results });
     setIsUploading(false);
-    updateProuduct({ ...form, images: results, image: results[0].secure_url });
+    productId
+      ? UpdateProuduct({
+          productId,
+          productData: {
+            ...form,
+            images: results.length ? results : undefined,
+            image: results.length ? results[0].secure_url : undefined,
+          },
+        })
+      : AddProuduct({
+          ...form,
+          images: results,
+          image: results.length && results[0].secure_url,
+        });
   };
+  console.log(product?.title);
+  const fields = {
+    title: product?.title ?? "test4",
+    description: product?.description ?? "some thing",
+    ingredients: product?.ingredients ?? "רכיבים",
+    images: product?.images ?? [],
+    quantetyInStock: product?.quantetyInStock ?? "2",
+    featured: product?.featured ?? true,
+    outOfStock: product?.outOfStock ?? false,
+    listed: product?.listed ?? true,
+    availibleForDelivery: product?.availibleForDelivery ?? true,
+    price: {
+      value: product?.price.value.toString(),
+      currency: product?.price.currency.toString(),
+    } ?? { value: "14", currency: "₪" },
+    quantity: {
+      value: product?.quantity.value.toString(),
+      currency: product?.quantity.currency.toString(),
+    } ?? { value: "14", currency: "g" },
+    categoryid: product?.category ?? "",
+  };
+  const [form, setForm] = useState(fields);
+  console.log({ form });
+  useEffect(() => {
+    setForm(fields);
+  }, [product]);
 
   const handleObbjectChange = (event: any) => {
     let fields = JSON.parse(event.target.name);
@@ -70,7 +145,9 @@ function AddProduct() {
   const handleCheckboxChange = (event: any) => {
     setForm((prev) => ({ ...prev, [event.target.name]: event.target.checked }));
   };
-  isLoading || (categoriesLoading && <h1>lodaing</h1>);
+  if (isLoading || categoriesLoading || updateLoading || productLoading)
+    return <h1>lodaing</h1>;
+
   return (
     <div
       style={{
@@ -242,43 +319,3 @@ function AddProduct() {
 }
 
 export default AddProduct;
-
-const currencies = [
-  {
-    value: "USD",
-    label: "$",
-  },
-  {
-    value: "EUR",
-    label: "€",
-  },
-  {
-    value: "NIS",
-    label: "₪",
-  },
-];
-const quantityCurrency = [
-  {
-    value: "GRAM",
-    label: "g",
-  },
-  {
-    value: "MIL",
-    label: "ml",
-  },
-];
-
-const fields = {
-  title: "test3",
-  description: "some thing",
-  ingredients: "רכיבים",
-  images: [],
-  quantetyInStock: "2",
-  featured: true,
-  outOfStock: false,
-  listed: true,
-  availibleForDelivery: true,
-  price: { value: "14", currency: "₪" },
-  quantity: { value: "14", currency: "g" },
-  categoryid: "",
-};

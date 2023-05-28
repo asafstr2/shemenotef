@@ -23,6 +23,7 @@ import { MainWrapper } from "./Main.style";
 import ProductPageRedirect from "components/product/ProductPageRedirect";
 import AddCategory from "routes/admin/AddCategory";
 import BlogPost from "components/blog/BlogPost";
+import EditProduct from "routes/admin/EditProduct";
 function Main() {
   let location = useLocation();
   let modalLocation = location?.state?.modalLocation;
@@ -120,10 +121,18 @@ function Main() {
             }
           />
           <Route
-            path="/admin/addProduct/:productId"
+            path="/admin/addProduct/"
             element={
               <AdminRoute>
                 <AddProduct />
+              </AdminRoute>
+            }
+          />
+          <Route
+            path="/admin/addProduct/:productId"
+            element={
+              <AdminRoute>
+                <EditProduct />
               </AdminRoute>
             }
           />
