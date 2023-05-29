@@ -15,6 +15,7 @@ function CustomLink({ children, to, ...props }: Props) {
         textDecoration: "none",
         opacity: match ? "0.6" : "",
         color: "inherit",
+        height: "100%",
       }}
       to={to}
       {...props}
