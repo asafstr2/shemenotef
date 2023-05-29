@@ -47,7 +47,7 @@ export const Image = mui("img")<ImageProps>(
   ({ theme, category }: { theme: Theme; category?: boolean }) => ({
     width: "100%",
     height: "350px",
-    objectFit: "contain",
+    objectFit: "cover",
     flex: 3,
     transition: "all 0.3s ease",
     "&:hover": {
