@@ -67,7 +67,10 @@ const ButtonsContainer = styled("div")(({ theme }) => ({
 const ProductDescription = styled(Typography)(({ theme }) => ({
   //   [theme.breakpoints.down("sm")]: {},
 }));
-
+const Ingridiant = styled(Typography)(({ theme }) => ({
+  //   [theme.breakpoints.down("sm")]: {},
+  marginBlockStart: theme.spacing(2),
+}));
 const AdminPanel = styled("div")(({ theme }) => ({
   display: "flex",
   width: "100%",
@@ -93,8 +96,15 @@ function ProductPage() {
   const dispatch = useDispatch();
   const [showQr, setShowQr] = useState(false);
   let location = useLocation();
-  const { title, description, _id, images, price }: Products =
-    location?.state?.props;
+  const {
+    title,
+    description,
+    _id,
+    images,
+    price,
+    quantity,
+    ingredients,
+  }: Products = location?.state?.props;
   console.log(location?.state?.props);
 
   const path = `https://shemen-otef.onrender.com/product/${_id}/qr`;
@@ -108,11 +118,9 @@ function ProductPage() {
   const rightSection = (
     <div>
       <StyledHeader variant="h4"> {title}</StyledHeader>
-
       <PriceContainer variant="h5" color="text.secondary">
         {`${price.value}${price.currency}`}
       </PriceContainer>
-
       <ButtonsContainer>
         <Button
           variant="outlined"
@@ -155,6 +163,12 @@ function ProductPage() {
         </AdminPanel>
       </ButtonsContainer>
       <ProductDescription>{description}</ProductDescription>
+      <Ingridiant color="text.secondary" variant="subtitle2">
+        {ingredients}
+      </Ingridiant>
+      <PriceContainer variant="subtitle1" color="text.secondary">
+        {`${quantity.value}${quantity.currency}`}
+      </PriceContainer>
       {showQr && (
         <div
           style={{
