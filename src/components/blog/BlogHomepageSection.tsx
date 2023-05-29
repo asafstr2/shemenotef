@@ -6,7 +6,6 @@ import { NavLink } from "react-router-dom";
 const BlogMainSection = styled(Box)(({ theme }) => ({
   display: "flex",
   flexDirection: "column",
-  gap: theme.spacing(4),
   width: "100%",
   alignItems: "center",
   justifyContent: "center",

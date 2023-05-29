@@ -103,7 +103,7 @@ const AboutSection = () => {
           </StyledContent>
           <Logo>
             <img
-              src="https://static1.s123-cdn-static-a.com/uploads/7229067/400_642c249798e17.jpg"
+              src="https://res.cloudinary.com/asafstr2/image/upload/v1685339756/profile-shemen-otef.jpg"
               alt="profile"
             />
           </Logo>

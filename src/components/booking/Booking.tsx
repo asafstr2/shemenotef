@@ -7,8 +7,8 @@ import ContactUsMain from "components/contact-us/ContactUsMain";
 import { Container } from "@mui/material";
 function Booking() {
   return (
-    <>
-      <StyledTitle>בוקינג - מערכת הזמנות</StyledTitle>
+    <BookingMainSection>
+      <StyledTitle> מערכת הזמנות טיפולים</StyledTitle>
       <StyledDivider />
       <ResponsiveContainer>
         <RightContainer>
@@ -17,7 +17,7 @@ function Booking() {
           </Typography>
           <TextContainer>
             <PriceTextNoColor>מחיר :</PriceTextNoColor>
-            <PriceText>₪150 </PriceText>
+            <PriceText>₪180 </PriceText>
           </TextContainer>
           <Image>
             <img
@@ -30,11 +30,21 @@ function Booking() {
           <ContactUsMain booking />
         </LeftContainer>
       </ResponsiveContainer>
-    </>
+    </BookingMainSection>
   );
 }
 
 export default Booking;
+
+const BookingMainSection = styled(Box)(({ theme }) => ({
+  display: "flex",
+  flexDirection: "column",
+  width: "100%",
+  alignItems: "center",
+  justifyContent: "center",
+  background: "white",
+  paddingBlockStart: theme.spacing(4),
+}));
 
 const PriceText = styled(Typography)(({ theme }) => ({
   color: theme.palette.primary.light,

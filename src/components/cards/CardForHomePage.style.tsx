@@ -47,7 +47,7 @@ export const Image = mui("img")<ImageProps>(
   ({ theme, category }: { theme: Theme; category?: boolean }) => ({
     width: "100%",
     height: "350px",
-    objectFit: "cover",
+    objectFit: "contain",
     flex: 3,
     transition: "all 0.3s ease",
     "&:hover": {
@@ -77,15 +77,17 @@ export const Button = mui("button")(
 );
 
 export const CardFooter = mui("div")({
-  width: "100%",
+  // width: "100%",
   flex: 1,
   display: "flex",
   alignItems: "center",
-  justifyContent: "space-around",
+  justifyContent: "center",
+  flexDirection: "column",
+  padding: "0.5rem",
 });
 
 export const Card = mui("div")(({ theme }: { theme: Theme }) => ({
-  // width: "25%",
+  width: "15%",
   margin: "2rem",
   borderRadius: "15px",
   textAlign: "center",
