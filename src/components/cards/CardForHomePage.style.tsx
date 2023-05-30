@@ -55,6 +55,9 @@ export const Image = mui("img")<ImageProps>(
       opacity: 0.8,
       scale: category ? "1.05" : "",
     },
+    "@media (max-width: 600px)": {
+      objectFit: "contain",
+    },
   })
 );
 export const ImageContainer = mui("div")(({ theme }: { theme: Theme }) => ({
