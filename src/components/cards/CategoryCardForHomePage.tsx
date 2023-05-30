@@ -6,6 +6,7 @@ import {
   FloatingDiv,
   Title,
   FloatingQuantityDiv,
+  ImageContainer,
 } from "./CardForHomePage.style";
 
 import NavLink from "components/utils/Link";
@@ -15,7 +16,9 @@ function CardForHomePage({ category }: { category: Category }) {
     <Card key={category._id}>
       <NavLink to={`/categories/${category._id}`}>
         <>
-          <Image src={category.image} alt={category.title} category />
+          <ImageContainer>
+            <Image src={category.image} alt={category.title} category />
+          </ImageContainer>
           <CardFooter>
             <Title>{category.title}</Title>
           </CardFooter>

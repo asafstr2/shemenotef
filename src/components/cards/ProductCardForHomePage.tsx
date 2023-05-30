@@ -7,6 +7,7 @@ import {
   FloatingDiv,
   Title,
   Price,
+  ImageContainer,
 } from "./CardForHomePage.style";
 
 import { addToCart } from "app/slices/cartSlice";
@@ -25,7 +26,9 @@ function CardForHomePage({ product }: { product: Products }) {
         state={{ props: product, modalLocation: location }}
       >
         <>
-          <Image src={product.image} alt={product.title} />
+          <ImageContainer>
+            <Image src={product.image} alt={product.title} />
+          </ImageContainer>
           <CardFooter>
             <Title>{product.title}</Title>
             <Price>{`${product.price.currency}${product.price.value}`}</Price>

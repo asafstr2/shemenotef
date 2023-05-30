@@ -47,6 +47,7 @@ export const Image = mui("img")<ImageProps>(
   ({ theme, category }: { theme: Theme; category?: boolean }) => ({
     width: "100%",
     minHeight: "350px",
+    maxHeight: "360px",
     objectFit: "cover",
     flex: 3,
     transition: "all 0.3s ease",
@@ -56,6 +57,10 @@ export const Image = mui("img")<ImageProps>(
     },
   })
 );
+export const ImageContainer = mui("div")(({ theme }: { theme: Theme }) => ({
+  width: "100%",
+  height: "400px",
+}));
 
 export const Button = mui("button")(
   ({ theme, category }: { theme: Theme; category?: boolean }) => ({
