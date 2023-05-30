@@ -47,10 +47,10 @@ function Footer() {
   return (
     <RootContainer container justifyContent="center" alignItems="center">
       <Grid item xs={12} md={6} textAlign="center">
-        <Logo
+        {/* <Logo
           src="https://static1.s123-cdn-static-a.com/uploads/7229067/400_642b1b8106cce.png"
           alt="Footer Logo"
-        />
+        /> */}
         <LinksContainer container item justifyContent="center">
           <FooterLink href="https://wa.me/0542772792" target="_blank">
             <IconContainer>

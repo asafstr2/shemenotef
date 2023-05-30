@@ -36,7 +36,7 @@ const AutocompleteComponent = ({ options, setOptions, refetch }: Props) => {
   return (
     <Autocomplete
       // freeSolo
-      sx={{ marginInlineEnd: "10%", InlineStart: "30px" }}
+      sx={{ marginInlineEnd: "30%", InlineStart: "30px" }}
       fullWidth
       options={options}
       getOptionLabel={(option?: any) => option.title ?? ""}
@@ -58,6 +58,21 @@ const AutocompleteComponent = ({ options, setOptions, refetch }: Props) => {
 
 export default AutocompleteComponent;
 const Search = styled("div")(({ theme }) => ({
+  position: "relative",
+  borderRadius: theme.shape.borderRadius,
+  backgroundColor: alpha(theme.palette.common.white, 0.15),
+  "&:hover": {
+    backgroundColor: alpha(theme.palette.common.white, 0.25),
+  },
+  marginInlineStart: theme.spacing(2),
+  marginInlineEnd: 0,
+  width: "100%",
+  [theme.breakpoints.up("sm")]: {
+    marginInlineStart: theme.spacing(3),
+    width: "auto",
+  },
+}));
+const StyledAutocomplete = styled(Autocomplete)(({ theme }) => ({
   position: "relative",
   borderRadius: theme.shape.borderRadius,
   backgroundColor: alpha(theme.palette.common.white, 0.15),
